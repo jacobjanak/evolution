@@ -1,0 +1,18 @@
+#world {
+  position: relative;
+}
+.row {
+  /* line-height creates spacing between rows */
+  line-height: 0px;
+}
+.tile {
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+}
+.plant {
+  position: absolute;
+  height: 5px;
+  width: 5px;
+  background-color: blue;
+}
