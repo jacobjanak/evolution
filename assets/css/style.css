@@ -16,3 +16,9 @@
   width: 5px;
   background-color: blue;
 }
+#cycle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}

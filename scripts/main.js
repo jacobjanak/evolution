@@ -1,59 +1,66 @@
-require(['jquery', 'foo'], function($, foo) {
+require([
+  'jquery',
+  'config',
+  'models/Tile',
+  'models/Plant',
+  'utilities/collision'
+], function($, config, Tile, Plant, collision) {
+
   // global variables
   let i, j;
   let tiles = [];
   let plants = [];
   let $world = $('#world');
-  let tileSize = 50;
-  let world = {
-    height: 10,
-    width: 10
-  };
-  let initialCounts = {
-    plants: 50,
-    herbivores: 20,
-    carnivores: 10
-  };
 
-  // utilities
-  let randInt = (min, max) => {
-    return Math.floor(Math.random() * (max - min)) + min;
-  };
+  // script begins
+  $world.empty()
+  spawnTiles(config.worldDimensions)
+  spawnPlants()
+  //NOTE: spawnHerbivores()
+  //NOTE: spawnCarnivores()
+  updateWorld()
+  // script ends
 
-  class Tile {
-    constructor() {
-      this.fertility = Math.random().toFixed(2);
-    }
-
-    static createElement() {
-      return $('<div class="tile">');
-    }
-  }
-
-  // create new world with tiles
-  newWorld(world)
-
-  function newWorld(config) {
+  function spawnTiles(worldDimensions) {
     // generate new tile objects
     tiles = [];
-    let tileCount = config.height * config.width;
+    let tileCount = worldDimensions.height * worldDimensions.width;
     for (i = 0; i < tileCount; i++) {
       tiles.push(new Tile())
     }
 
-    // update DOM
-    $world.empty()
-    // create grid: i = rows, j = columns
-    for (i = 0; i < config.height; i++) {
+    // DOM tile grid where i = rows, j = columns
+    for (i = 0; i < worldDimensions.height; i++) {
       let $row = $('<div class="row">');
-      for (j = 0; j < config.width; j++) {
+      for (j = 0; j < worldDimensions.width; j++) {
         $row.append(Tile.createElement())
       }
       $world.append($row)
     }
   }
 
-  updateWorld()
+  function spawnPlants() {
+    // generate new plant objects
+    plants = [];
+    for (i = 0; i < config.spawnCount.plants; i++) {
+      plants.push(new Plant());
+    }
+
+    // add to DOM
+    i = plants.length;
+    while (i--) {
+      let j = i;
+      // make sure that two plants won't be touching
+      while (j--) {
+        if ( Math.abs(plants[i].x - plants[j].x) <= config.plantSize
+          && Math.abs(plants[i].y - plants[j].y) <= config.plantSize ) {
+          plants.splice(j, 1);
+          j--
+        }
+      }
+      plants[i].spawn()
+    }
+  }
 
   function updateWorld() {
     // update colors
@@ -63,44 +70,19 @@ require(['jquery', 'foo'], function($, foo) {
         backgroundColor: 'rgb(' + (100 + (100 * fertility)) + ', 200, 100)'
       })
     })
-  }
 
-  class Plant {
-    constructor() {
-      this.growth = 0;
-      this.seedSpread = randInt(1, 10);
-      this.x = randInt(1, world.width * tileSize);
-      this.y = randInt(1, world.height * tileSize);
-    }
-
-    spawn() {
-      let $e = $('<div class="plant">');
-      $e.css({
-        top: this.y,
-        left: this.x
-      })
-      $world.append($e)
-    }
-
-    grow() {
-
-    }
-  }
-
-  spawnPlants()
-
-  function spawnPlants() {
-    // generate new plant objects
-    plants = [];
-    for (i = 0; i < initialCounts.plants; i++) {
-      plants.push(new Plant());
-    }
-
-    // update DOM
-    plants.forEach((plant) => {
-      plant.spawn()
+    // grow plants
+    plants.forEach((plant, i) => {
+      const row = Math.floor(plant.y / config.tileSize);
+      const column = Math.floor(plant.x / config.tileSize);
+      const fertility = tiles[row * config.worldDimensions.height + column].fertility;
+      plant.grow(fertility)
     })
   }
 
-  console.log(plants)
+  window.plants = plants;
+  window.tiles = tiles;
+  console.log("len: " + plants.length)
+
+  $('#cycle').on('click', updateWorld)
 })
