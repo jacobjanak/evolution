@@ -10,7 +10,7 @@ define(['../config', '../utilities/random'], function(config, random) {
     }
 
     spawn() {
-      let $e = $('<div class="plant">');
+      let $e = $('<div class="plant">0</div>');
       $e.attr('id', this.id)
       $e.css({
         top: this.y,
@@ -21,6 +21,7 @@ define(['../config', '../utilities/random'], function(config, random) {
 
     grow(fertility) {
       this.growth += Math.round(fertility * 100);
+      $('#' + this.id).text(this.growth)
     }
   }
 

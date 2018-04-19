@@ -1,10 +1,11 @@
 define(function() {
 
   const config = {
-    tileSize: 50,
-    plantSize: 5,
+    tileSize: 100,
+    plantSize: 20,
+    animalSize: 10,
     worldDimensions: {
-      height: 10,
+      height: 6,
       width: 10
     },
     spawnCount: {

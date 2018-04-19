@@ -3,21 +3,23 @@ require([
   'config',
   'models/Tile',
   'models/Plant',
+  'models/Herbivore',
   'utilities/collision'
-], function($, config, Tile, Plant, collision) {
+], function($, config, Tile, Plant, Herbivore, collision) {
 
   // global variables
   let i, j;
   let tiles = [];
   let plants = [];
+  let herbivores = [];
   let $world = $('#world');
 
   // script begins
   $world.empty()
   spawnTiles(config.worldDimensions)
   spawnPlants()
-  //NOTE: spawnHerbivores()
-  //NOTE: spawnCarnivores()
+  spawnHerbivores()
+  spawnCarnivores()
   updateWorld()
   // script ends
 
@@ -62,6 +64,23 @@ require([
     }
   }
 
+  function spawnHerbivores() {
+    // generate new herbivore objects
+    herbivores = [];
+    for (i = 0; i < config.spawnCount.herbivores; i++) {
+      herbivores.push(new Herbivore());
+    }
+
+    // add to DOM
+    herbivores.forEach((herbivore) => {
+      herbivore.spawn()
+    })
+  }
+
+  function spawnCarnivores() {
+
+  }
+
   function updateWorld() {
     // update colors
     $.each($('.tile'), function(i, tile) {
@@ -79,10 +98,6 @@ require([
       plant.grow(fertility)
     })
   }
-
-  window.plants = plants;
-  window.tiles = tiles;
-  console.log("len: " + plants.length)
 
   $('#cycle').on('click', updateWorld)
 })
