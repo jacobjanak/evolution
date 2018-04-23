@@ -4,8 +4,9 @@ require([
   'models/Tile',
   'models/Plant',
   'models/Herbivore',
-  'utilities/collision'
-], function($, config, Tile, Plant, Herbivore, collision) {
+  'utilities/collision',
+  'utilities/find-tile'
+], function($, config, Tile, Plant, Herbivore, collision, findTile) {
 
   // global variables
   let i, j;
@@ -48,11 +49,10 @@ require([
       plants.push(new Plant());
     }
 
-    // add to DOM
+    // make sure that two plants won't be touching
     i = plants.length;
     while (i--) {
       let j = i;
-      // make sure that two plants won't be touching
       while (j--) {
         if ( Math.abs(plants[i].x - plants[j].x) <= config.plantSize
           && Math.abs(plants[i].y - plants[j].y) <= config.plantSize ) {
@@ -60,8 +60,12 @@ require([
           j--
         }
       }
-      plants[i].spawn()
     }
+
+    // add to DOM
+    plants.forEach((plant) => {
+      plant.spawn()
+    })
   }
 
   function spawnHerbivores() {
@@ -86,18 +90,32 @@ require([
     $.each($('.tile'), function(i, tile) {
       const fertility = tiles[i].fertility;
       $(tile).css({
-        backgroundColor: 'rgb(' + (100 + (100 * fertility)) + ', 200, 100)'
+        backgroundColor: 'rgb(' + (200 - (100 * fertility)) + ', 200, 100)'
       })
     })
 
     // grow plants
     plants.forEach((plant, i) => {
-      const row = Math.floor(plant.y / config.tileSize);
-      const column = Math.floor(plant.x / config.tileSize);
-      const fertility = tiles[row * config.worldDimensions.height + column].fertility;
-      plant.grow(fertility)
+      const parentTile = tiles[findTile(plant)];
+      plant.grow(parentTile.fertility)
+    })
+
+    herbivores.forEach((herbivore) => {
+      const parentTileID = findTile(herbivore);
+      herbivore.move(tiles, parentTileID)
     })
   }
 
+  // DEBUG //
+  window.tiles = tiles;
+  window.plants = plants;
+  window.herbivores = herbivores;
+  // DEBUG //
+
   $('#cycle').on('click', updateWorld)
+  $(document).on('keyup', function(event) {
+    if (event.key === 'n') {
+      updateWorld()
+    }
+  })
 })
