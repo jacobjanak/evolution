@@ -23,56 +23,19 @@ define([
       $('#world').append($e)
     }
 
-    move(tiles, tileID) {
-      // group the 4 tiles next to this animal (some may be undefined)
-      let adjacentTiles = {
-        top: tiles[tileID - config.worldDimensions.width],
-        right: tiles[tileID + 1],
-        left: tiles[tileID - 1],
-        bottom: tiles[tileID - config.worldDimensions.width]
-      };
+    move(direction) {
+      const distance = random.randInt(this.speed, this.speed * 2);
 
-      // hold data about the most desirable tile
-      let bestTile = {
-        direction: false,
-        difference: 100
-      };
+      // change position
+      if (direction === 'top') this.y -= distance;
+      else if (direction === 'left') this.x -= distance;
+      else if (direction === 'right') this.x += distance;
+      else if (direction === 'bottom') this.y += distance;
 
-      // iterate over adjacent tiles and update the best tile as needed
-      for (let k in adjacentTiles) {
-        if (adjacentTiles[k]) {
-          let randomness = random.randInt(-25, 25)
-          let difference = (adjacentTiles[k].fertility - 100) + randomness;
-          difference = Math.abs(difference)
-          if (difference < bestTile.difference) {
-            bestTile.direction = k;
-            bestTile.difference = difference;
-          }
-        }
-      }
-
-      // now that we know the best direction, it's time to move
-      switch (bestTile.direction) {
-        case 'top':
-          this.y -= random.randInt(this.speed, this.speed * 2);
-          break;
-
-        case 'left':
-          this.x -= random.randInt(this.speed, this.speed * 2);
-          break;
-
-        case 'right':
-          this.x += random.randInt(this.speed, this.speed * 2);
-          break;
-
-        case 'bottom':
-          this.y += random.randInt(this.speed, this.speed * 2);
-          break;
-      }
-
+      // make sure it's not overflowing (shouldn't be necessary)
       this.keepInBounds()
 
-      // re-position the element now
+      // reposition the element
       $('#' + this.id).css({
         top: this.y,
         left: this.x

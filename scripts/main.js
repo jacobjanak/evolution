@@ -5,11 +5,11 @@ require([
   'models/Plant',
   'models/Herbivore',
   'utilities/collision',
-  'utilities/find-tile'
-], function($, config, Tile, Plant, Herbivore, collision, findTile) {
+  'utilities/find'
+], function($, config, Tile, Plant, Herbivore, collision, find) {
 
   // global variables
-  let i, j;
+  let i, j, k;
   let tiles = [];
   let plants = [];
   let herbivores = [];
@@ -96,13 +96,18 @@ require([
 
     // grow plants
     plants.forEach((plant, i) => {
-      const parentTile = tiles[findTile(plant)];
+      const parentTile = tiles[find.tile(plant)];
       plant.grow(parentTile.fertility)
     })
 
     herbivores.forEach((herbivore) => {
-      const parentTileID = findTile(herbivore);
-      herbivore.move(tiles, parentTileID)
+      const adjacentTileIDs = find.adjacentTiles(herbivore);
+      let adjacentTiles = new Object();
+      for (k in adjacentTileIDs) {
+        adjacentTiles[k] = tiles[adjacentTileIDs[k]];
+      }
+      const direction = find.direction(herbivore, adjacentTiles);
+      herbivore.move(direction)
     })
   }
 
