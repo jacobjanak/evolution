@@ -9,9 +9,13 @@ define(function() {
       width: 10
     },
     spawnCount: {
-      plants: 50,
+      plants: 200,
       herbivores: 20,
       carnivores: 10
+    },
+    reproductionRate: {
+      plant: 20,
+      herbivore: 20
     }
   };
 

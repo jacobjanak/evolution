@@ -9,8 +9,9 @@ define([
       this.x = random.randInt(1, config.worldDimensions.width * config.tileSize - config.animalSize);
       this.y = random.randInt(1, config.worldDimensions.height * config.tileSize - config.animalSize);
       this.preference = Math.random().toFixed(2);
-      this.hunger = 100;
       this.speed = config.animalSize;
+      this.hunger = 100;
+      this.reproductionCycle = random.randInt(1, config.reproductionRate.herbivore + 1);
     }
 
     spawn() {
@@ -54,6 +55,24 @@ define([
       else if (this.x < limit.left) this.x = limit.left;
       else if (this.x > limit.right) this.x = limit.right;
       else if (this.y > limit.bottom) this.y = limit.bottom;
+    }
+
+    reproduce() {
+      let offspring = new Herbivore();
+      offspring.x = this.x;
+      offspring.y = this.y;
+
+      let min = this.preference - 0.1;
+      if (min < 0) min = 0;
+
+      let max = this.preference + 0.1;
+      if (max > 0.99) max = 0.99;
+
+      let randomPreference = random.randInt(Math.round(min * 100), Math.round(max * 100));
+
+      offspring.preference = Math.round(randomPreference / 100);
+
+      return offspring;
     }
   }
 
