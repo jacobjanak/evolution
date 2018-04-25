@@ -3,8 +3,8 @@ define(['../config', '../utilities/random'], function(config, random) {
   class Plant {
     constructor() {
       this.id = random.randStr(8);
-      this.x = random.randInt(1, config.worldDimensions.width * config.tileSize - config.plantSize);
-      this.y = random.randInt(1, config.worldDimensions.height * config.tileSize - config.plantSize);
+      this.x = random.randInt(1, config.world.width * config.tileSize - config.plantSize);
+      this.y = random.randInt(1, config.world.height * config.tileSize - config.plantSize);
       this.growth = 0;
       this.reproductionCycle = random.randInt(1, config.reproductionRate.plant + 1);
     }
@@ -29,6 +29,8 @@ define(['../config', '../utilities/random'], function(config, random) {
 
     reproduce() {
       let offspring = new Plant();
+      offspring.reproductionCycle = config.reproductionRate.plant + 1;
+
       const randomX = random.randInt(config.plantSize * -5, config.plantSize * 5);
       const randomY = random.randInt(config.plantSize * -5, config.plantSize * 5);
       offspring.x = this.x + randomX;
@@ -37,8 +39,8 @@ define(['../config', '../utilities/random'], function(config, random) {
       const limit = {
         top: 0,
         left: 0,
-        right: config.worldDimensions.width * config.tileSize - config.plantSize,
-        bottom: config.worldDimensions.height * config.tileSize - config.plantSize
+        right: config.world.width * config.tileSize - config.plantSize,
+        bottom: config.world.height * config.tileSize - config.plantSize
       };
 
       if (offspring.y >= limit.top && offspring.x >= limit.left

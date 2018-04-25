@@ -17,25 +17,25 @@ require([
 
   // script begins
   $world.empty()
-  spawnTiles(config.worldDimensions)
+  spawnTiles(config.world)
   spawnPlants()
   spawnHerbivores()
   spawnCarnivores()
   updateWorld()
   // script ends
 
-  function spawnTiles(worldDimensions) {
+  function spawnTiles(world) {
     // generate new tile objects
     tiles = [];
-    let tileCount = worldDimensions.height * worldDimensions.width;
+    let tileCount = world.height * world.width;
     for (i = 0; i < tileCount; i++) {
       tiles.push(new Tile())
     }
 
     // DOM tile grid where i = rows, j = columns
-    for (i = 0; i < worldDimensions.height; i++) {
+    for (i = 0; i < world.height; i++) {
       let $row = $('<div class="row">');
-      for (j = 0; j < worldDimensions.width; j++) {
+      for (j = 0; j < world.width; j++) {
         $row.append(Tile.createElement())
       }
       $world.append($row)
@@ -54,10 +54,13 @@ require([
     while (i--) {
       let j = i;
       while (j--) {
-        if ( Math.abs(plants[i].x - plants[j].x) <= config.plantSize
-          && Math.abs(plants[i].y - plants[j].y) <= config.plantSize ) {
-          plants.splice(j, 1);
-          j--
+        if (plants[i] && plants[j]) {
+          if (Math.abs(plants[i].x - plants[j].x) <= config.plantSize &&
+            Math.abs(plants[i].y - plants[j].y) <= config.plantSize) {
+            // plant dies
+            plants.splice(i, 1);
+            break;
+          }
         }
       }
     }
@@ -86,53 +89,14 @@ require([
   }
 
   function updateWorld() {
-    updateColors()
     growPlants()
-
-    herbivores.forEach((herbivore, i) => {
-      // moving
-      const adjacentTileIDs = find.adjacentTiles(herbivore);
-      // convert ID's to Tile obejcts
-      let adjacentTiles = new Object();
-      for (k in adjacentTileIDs) {
-        adjacentTiles[k] = tiles[adjacentTileIDs[k]];
-      }
-
-      const direction = find.direction(herbivore, adjacentTiles);
-      herbivore.move(direction)
-
-      // update hunger
-      herbivore.hunger -= 5;
-
-      // eat plants
-      plants.forEach((plant, j) => {
-        if ( Math.abs(herbivore.x - plant.x) <= config.plantSize
-          && Math.abs(herbivore.y - plant.y) <= config.plantSize ) {
-          let amountToEat = Math.round((100 - herbivore.hunger) * 100);
-          if (plant.growth < amountToEat) {
-            amountToEat = plant.growth;
-
-            // plant dies
-            $('#' + plant.id).remove()
-            plants.splice(j, 1);
-          } else {
-            plant.growth -= amountToEat;
-          }
-          herbivore.hunger += Math.round(amountToEat / 100);
-        }
-      })
-
-      // herbivore dies
-      if (herbivore.hunger <= 0) {
-        $('#' + herbivore.id).remove()
-        herbivores.splice(i, 1);
-      }
-    })
-
+    moveHerbivores()
+    feedHerbivores()
     reproducePlants()
     reproduceHerbivores()
-
+    updateColors()
     updateText()
+    doubleCheck()
   }
 
   function updateColors() {
@@ -151,6 +115,52 @@ require([
     })
   }
 
+  function moveHerbivores() {
+    herbivores.forEach((herbivore) => {
+      // moving
+      const adjacentTileIDs = find.adjacentTiles(herbivore);
+      // convert ID's to Tile obejcts
+      let adjacentTiles = new Object();
+      for (k in adjacentTileIDs) {
+        adjacentTiles[k] = tiles[adjacentTileIDs[k]];
+      }
+
+      const direction = find.direction(herbivore, adjacentTiles);
+      herbivore.move(direction)
+    })
+  }
+
+  function feedHerbivores() {
+    herbivores.forEach((herbivore, i) => {
+      // update hunger
+      herbivore.hunger -= 3;
+
+      // eat plants
+      plants.forEach((plant, j) => {
+        if (Math.abs(herbivore.x - plant.x) <= config.plantSize &&
+          Math.abs(herbivore.y - plant.y) <= config.plantSize) {
+          let amountToEat = Math.round((100 - herbivore.hunger) * 100);
+          if (plant.growth < amountToEat) {
+            amountToEat = plant.growth;
+
+            // plant dies
+            $('#' + plant.id).remove()
+            plants.splice(j, 1);
+          } else {
+            plant.growth -= amountToEat;
+          }
+          herbivore.hunger += Math.round(amountToEat / 100);
+        }
+      })
+
+      // herbivore dies if hunger is 0 or less
+      if (herbivore.hunger <= 0) {
+        $('#' + herbivore.id).remove()
+        herbivores.splice(i, 1);
+      }
+    })
+  }
+
   function reproducePlants() {
     plants.forEach((plant) => {
       if (plant.reproductionCycle === 0) {
@@ -164,6 +174,23 @@ require([
         plant.reproductionCycle--
       }
     })
+
+    // make sure that two plants won't be touching
+    i = plants.length;
+    while (i--) {
+      let j = i;
+      while (j--) {
+        if (plants[i] && plants[j]) {
+          if (Math.abs(plants[i].x - plants[j].x) <= config.plantSize &&
+            Math.abs(plants[i].y - plants[j].y) <= config.plantSize) {
+            // plant dies
+            $('#' + plants[j].id).remove()
+            plants.splice(i, 1);
+            break;
+          }
+        }
+      }
+    }
   }
 
   function reproduceHerbivores() {
@@ -191,6 +218,34 @@ require([
     })
   }
 
+  function doubleCheck() {
+    // make sure no plants got left behind
+    $.each($('.plant'), (i, $plant) => {
+      let shouldExist = false;
+      plants.forEach((plant) => {
+        if (plant.id === $($plant).attr('id')) {
+          shouldExist = true;
+        }
+      })
+      if (!shouldExist) {
+        $($plant).remove()
+        console.log('Found a bug - tkaue')
+      }
+    })
+    plants.forEach((plant) => {
+      let shouldExist = false;
+      $.each($('.plant'), (i, $plant) => {
+        if (plant.id === $($plant).attr('id')) {
+          shouldExist = true;
+        }
+      })
+      if (!shouldExist) {
+        $($plant).remove()
+        console.log('Found a bug - ytcmv')
+      }
+    })
+  }
+
   // DEBUG //
   window.tiles = tiles;
   window.plants = plants;
@@ -198,9 +253,5 @@ require([
   // DEBUG //
 
   $('#cycle').on('click', updateWorld)
-  $(document).on('keyup', function(event) {
-    if (event.key === 'n') {
-      updateWorld()
-    }
-  })
+  $(document).on('keyup', updateWorld)
 })

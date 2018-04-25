@@ -6,10 +6,10 @@ define([
   class Herbivore {
     constructor() {
       this.id = random.randStr(8);
-      this.x = random.randInt(1, config.worldDimensions.width * config.tileSize - config.animalSize);
-      this.y = random.randInt(1, config.worldDimensions.height * config.tileSize - config.animalSize);
-      this.preference = Math.random().toFixed(2);
-      this.speed = config.animalSize;
+      this.x = random.randInt(1, config.world.width * config.tileSize - config.animalSize);
+      this.y = random.randInt(1, config.world.height * config.tileSize - config.animalSize);
+      this.preference = Number(Math.random().toFixed(2));
+      this.speed = config.animalSize * 1;
       this.hunger = 100;
       this.reproductionCycle = random.randInt(1, config.reproductionRate.herbivore + 1);
     }
@@ -47,8 +47,8 @@ define([
       const limit = {
         top: 0,
         left: 0,
-        right: config.worldDimensions.width * config.tileSize - config.animalSize,
-        bottom: config.worldDimensions.height * config.tileSize - config.animalSize
+        right: config.world.width * config.tileSize - config.animalSize,
+        bottom: config.world.height * config.tileSize - config.animalSize
       };
 
       if (this.y < limit.top) this.y = limit.top;
@@ -59,18 +59,15 @@ define([
 
     reproduce() {
       let offspring = new Herbivore();
+      offspring.reproductionCycle = config.reproductionRate.herbivore + 1;
       offspring.x = this.x;
       offspring.y = this.y;
 
-      let min = this.preference - 0.1;
-      if (min < 0) min = 0;
-
-      let max = this.preference + 0.1;
-      if (max > 0.99) max = 0.99;
-
-      let randomPreference = random.randInt(Math.round(min * 100), Math.round(max * 100));
-
-      offspring.preference = Math.round(randomPreference / 100);
+      // preference gets inherited with some randomness
+      let randomness = random.randInt(-10, 10) / 100;
+      offspring.preference = Number((this.preference + randomness).toFixed(2));
+      if (offspring.preference > 0.99) offspring.preference = 0.99;
+      else if (offspring.preference < 0) offspring.preference = 0;
 
       return offspring;
     }

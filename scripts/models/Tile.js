@@ -2,7 +2,7 @@ define(function() {
 
   class Tile {
     constructor() {
-      this.fertility = Math.random().toFixed(2);
+      this.fertility = Number(Math.random().toFixed(2));
     }
 
     static createElement() {
