@@ -47,45 +47,37 @@ require([
   }
 
   function spawnPlants() {
-    // generate new plant objects
-    plants = [];
     for (i = 0; i < config.spawnCount.plants; i++) {
-      plants.push(new Plant());
-    }
+      let newPlant = new Plant();
 
-    // make sure that two plants won't be touching
-    i = plants.length;
-    while (i--) {
-      let j = i;
-      while (j--) {
-        if (plants[i] && plants[j]) {
-          if (Math.abs(plants[i].x - plants[j].x) <= config.plantSize &&
-            Math.abs(plants[i].y - plants[j].y) <= config.plantSize) {
-            // plant dies
-            plants.splice(i, 1);
-            break;
-          }
-        }
+      // check if it has space to spawn
+      let hasSpace = true;
+      plants.forEach((plant) => {
+        let isTouching = touching({
+          x: newPlant.x,
+          y: newPlant.y,
+          size: config.plantSize
+        }, {
+          x: plant.x,
+          y: plant.y,
+          size: config.plantSize
+        })
+        if (isTouching) hasSpace = false;
+      })
+      if (hasSpace) {
+        newPlant.spawn()
+        plants.push(newPlant)
       }
     }
-
-    // add to DOM
-    plants.forEach((plant) => {
-      plant.spawn()
-    })
   }
 
   function spawnHerbivores() {
     // generate new herbivore objects
-    herbivores = [];
     for (i = 0; i < config.spawnCount.herbivores; i++) {
-      herbivores.push(new Herbivore());
+      const newHerbivore = new Herbivore();
+      newHerbivore.spawn()
+      herbivores.push(newHerbivore);
     }
-
-    // add to DOM
-    herbivores.forEach((herbivore) => {
-      herbivore.spawn()
-    })
   }
 
   function spawnCarnivores() {
@@ -168,8 +160,16 @@ require([
 
       // eat plants
       plants.forEach((plant, j) => {
-        if (Math.abs(herbivore.x - plant.x) <= config.plantSize &&
-          Math.abs(herbivore.y - plant.y) <= config.plantSize) {
+        const isTouching = touching({
+          x: herbivore.x,
+          y: herbivore.y,
+          size: config.animalSize
+        }, {
+          x: plant.x,
+          y: plant.y,
+          size: config.plantSize
+        })
+        if (isTouching) {
           let amountToEat = Math.round(100 - herbivore.hunger);
           if (plant.growth <= amountToEat) {
             amountToEat = plant.growth;

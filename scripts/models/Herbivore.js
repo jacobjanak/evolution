@@ -25,15 +25,28 @@ define([
     }
 
     move(direction) {
-      const distance = random.randInt(this.speed, this.speed * 2);
+      let distance = random.randInt(0, this.speed);
 
       // change position
       if (direction === 'top') this.y -= distance;
       else if (direction === 'left') this.x -= distance;
       else if (direction === 'right') this.x += distance;
       else if (direction === 'bottom') this.y += distance;
+      else if (direction === 'current') {
+        // randomly choose top/left or right/bottom
+        let randomBool = Math.random() >= 0.5;
+        if (randomBool) distance = 0 - distance;
 
-      // make sure it's not overflowing (shouldn't be necessary)
+        // randomly choose top/bottom or left/right
+        randomBool = Math.random() >= 0.5;
+        if (randomBool) {
+          this.x += distance;
+        } else {
+          this.y += distance;
+        }
+      }
+
+      // make sure it's not overflowing
       this.keepInBounds()
 
       // reposition the element

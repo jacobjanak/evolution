@@ -4,14 +4,14 @@ define(function() {
     tileSize: 50,
     plantSize: 20,
     animalSize: 10,
-    hungerLoss: 3,
+    hungerLoss: 5,
     world: {
       height: 6,
       width: 10
     },
     spawnCount: {
-      plants: 200,
-      herbivores: 60,
+      plants: 1,
+      herbivores: 1,
       carnivores: 10
     },
     reproductionRate: {

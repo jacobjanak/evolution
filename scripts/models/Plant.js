@@ -32,8 +32,8 @@ define(['../config', '../utilities/random'], function(config, random) {
       let offspring = new Plant();
       offspring.reproductionCycle = config.reproductionRate.plant + 1;
 
-      const randomX = random.randInt(config.plantSize * -5, config.plantSize * 5);
-      const randomY = random.randInt(config.plantSize * -5, config.plantSize * 5);
+      const randomX = random.randInt(config.plantSize * -3, config.plantSize * 3);
+      const randomY = random.randInt(config.plantSize * -3, config.plantSize * 3);
       offspring.x = this.x + randomX;
       offspring.y = this.y + randomY;
 

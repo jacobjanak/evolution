@@ -23,8 +23,8 @@ define([
     adjacentTiles: (organism) => {
       const coords = find.coords(organism);
       const tileID = find.tile(organism);
-
-      let adjacentTileIDs = new Object();
+      
+      let adjacentTileIDs = { current: tileID };
 
       // top
       if (coords.row !== 0) {

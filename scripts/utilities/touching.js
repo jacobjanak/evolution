@@ -42,7 +42,7 @@ define([
       return false;
     }
 
-    console.log('You have BUG my good sir!')
+    console.log('You have a BUG my good sir!')
     return false;
   }
 
