@@ -17,10 +17,13 @@ require([
   let $world = $('#world');
 
   // initial page load
-  spawnTiles()
-  spawnPlants()
-  updateColors()
-  updateText()
+  start()
+
+  function start() {
+    spawnTiles()
+    spawnPlants()
+    updateDOM()
+  }
 
   function spawnTiles() {
     // delete everything
@@ -91,30 +94,13 @@ require([
 
   // maintenence
   function updateWorld() {
-    growPlants()
     reproducePlants()
+    feedPlants()
     moveHerbivores()
     feedHerbivores()
     reproduceHerbivores()
-    doubleCheck()
-    updateColors()
-    updateText()
-  }
-
-  function updateColors() {
-    $.each($('.tile'), function(i, tile) {
-      const fertility = tiles[i].fertility;
-      $(tile).css({
-        backgroundColor: 'rgb(' + (200 - (100 * fertility)) + ', 200, 100)'
-      })
-    })
-  }
-
-  function growPlants() {
-    plants.forEach((plant, i) => {
-      const parentTile = tiles[find.tile(plant)];
-      plant.grow(parentTile.fertility)
-    })
+    // doubleCheck()
+    updateDOM()
   }
 
   function reproducePlants() {
@@ -145,22 +131,19 @@ require([
         plant.reproductionCycle--
       }
     })
+  }
 
-    // // make sure that two plants won't be touching
-    // i = plants.length;
-    // while (i--) {
-    //   let j = i;
-    //   while (j--) {
-    //     if (plants[i] && plants[j]) {
-    //       if (Math.abs(plants[i].x - plants[j].x) <= config.plantSize &&
-    //           Math.abs(plants[i].y - plants[j].y) <= config.plantSize) {
-    //         // plant dies
-    //         $('#' + plants[j].id).remove()
-    //         plants.splice(j, 1);
-    //       }
-    //     }
-    //   }
-    // }
+  function feedPlants() {
+    plants.forEach((plant, i) => {
+      const parentTile = tiles[find.tile(plant)];
+      plant.grow(parentTile.fertility)
+
+      // plant dies if its growth is 0
+      if (plant.growth <= 0) {
+        $('#' + plant.id).remove()
+        plants.splice(i, 1);
+      }
+    })
   }
 
   function moveHerbivores() {
@@ -224,11 +207,19 @@ require([
     })
   }
 
-  function updateText() {
+  function updateDOM() {
+    // update tile color
+    $.each($('.tile'), function(i, tile) {
+      const fertility = tiles[i].fertility;
+      $(tile).css({
+        backgroundColor: 'rgb(' + (200 - (100 * fertility)) + ', 200, 100)'
+      })
+    })
+
+    // update text
     plants.forEach((plant) => {
       $('#' + plant.id).text(plant.growth)
     })
-
     herbivores.forEach((herbivore) => {
       $('#' + herbivore.id).text(herbivore.hunger)
     })

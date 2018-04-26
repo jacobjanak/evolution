@@ -24,7 +24,8 @@ define(['../config', '../utilities/random'], function(config, random) {
       this.growth += Math.round(fertility * 10);
 
       // limit the max number
-      if (this.growth > 999) this.growth = 999;
+      const maxGrowth = Math.round(fertility * 1000);
+      if (this.growth > maxGrowth) this.growth = maxGrowth;
     }
 
     reproduce() {

@@ -4,7 +4,7 @@ define(function() {
     tileSize: 50,
     plantSize: 20,
     animalSize: 10,
-    hungerLoss: 5,
+    hungerLoss: 3,
     world: {
       height: 6,
       width: 10
