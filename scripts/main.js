@@ -5,8 +5,9 @@ require([
   'models/Plant',
   'models/Herbivore',
   'utilities/collision',
-  'utilities/find'
-], function($, config, Tile, Plant, Herbivore, collision, find) {
+  'utilities/find',
+  'utilities/touching'
+], function($, config, Tile, Plant, Herbivore, collision, find, touching) {
 
   // global variables
   let i, j, k;
@@ -15,12 +16,11 @@ require([
   let herbivores = [];
   let $world = $('#world');
 
-  // script begins
+  // initial page load
   spawnTiles()
   spawnPlants()
   updateColors()
   updateText()
-  // script ends
 
   function spawnTiles() {
     // delete everything
@@ -89,6 +89,7 @@ require([
 
   }
 
+  // maintenence
   function updateWorld() {
     growPlants()
     reproducePlants()
@@ -121,30 +122,45 @@ require([
       if (plant.reproductionCycle === 0) {
         let newPlant = plant.reproduce();
         if (newPlant) {
-          newPlant.spawn()
-          plants.push(newPlant)
-          plant.reproductionCycle = config.reproductionRate.plant;
+          let hasSpace = true;
+          plants.forEach((plant2, j) => {
+            const isTouching = touching({
+              x: newPlant.x,
+              y: newPlant.y,
+              size: config.plantSize
+            }, {
+              x: plant2.x,
+              y: plant2.y,
+              size: config.plantSize
+            })
+            if (isTouching) hasSpace = false;
+          })
+          if (hasSpace) {
+            newPlant.spawn()
+            plants.push(newPlant)
+            plant.reproductionCycle = config.reproductionRate.plant;
+          }
         }
       } else {
         plant.reproductionCycle--
       }
     })
 
-    // make sure that two plants won't be touching
-    i = plants.length;
-    while (i--) {
-      let j = i;
-      while (j--) {
-        if (plants[i] && plants[j]) {
-          if (Math.abs(plants[i].x - plants[j].x) <= config.plantSize &&
-            Math.abs(plants[i].y - plants[j].y) <= config.plantSize) {
-            // plant dies
-            $('#' + plants[j].id).remove()
-            plants.splice(j, 1);
-          }
-        }
-      }
-    }
+    // // make sure that two plants won't be touching
+    // i = plants.length;
+    // while (i--) {
+    //   let j = i;
+    //   while (j--) {
+    //     if (plants[i] && plants[j]) {
+    //       if (Math.abs(plants[i].x - plants[j].x) <= config.plantSize &&
+    //           Math.abs(plants[i].y - plants[j].y) <= config.plantSize) {
+    //         // plant dies
+    //         $('#' + plants[j].id).remove()
+    //         plants.splice(j, 1);
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   function moveHerbivores() {
@@ -165,7 +181,7 @@ require([
   function feedHerbivores() {
     herbivores.forEach((herbivore, i) => {
       // update hunger
-      herbivore.hunger -= 5;
+      herbivore.hunger -= config.hungerLoss;
 
       // eat plants
       plants.forEach((plant, j) => {
