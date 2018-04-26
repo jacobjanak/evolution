@@ -21,7 +21,7 @@ define(['../config', '../utilities/random'], function(config, random) {
 
     grow(fertility) {
       // need to round because JS is bad at math
-      this.growth += Math.round(fertility * 100);
+      this.growth += Math.round(fertility * 10);
 
       // limit the max number
       if (this.growth > 9999) this.growth = 9999;
@@ -44,7 +44,7 @@ define(['../config', '../utilities/random'], function(config, random) {
       };
 
       if (offspring.y >= limit.top && offspring.x >= limit.left
-        && offspring.x <= limit.right && offspring.y <= limit.bottom) {
+       && offspring.x <= limit.right && offspring.y <= limit.bottom) {
         return offspring;
       }
       return false;

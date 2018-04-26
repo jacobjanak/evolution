@@ -1,21 +1,21 @@
 define(function() {
 
   const config = {
-    tileSize: 100,
+    tileSize: 50,
     plantSize: 20,
     animalSize: 10,
     world: {
-      height: 6,
-      width: 10
+      height: 12,
+      width: 20
     },
     spawnCount: {
       plants: 200,
-      herbivores: 60,
+      herbivores: 20,
       carnivores: 10
     },
     reproductionRate: {
       plant: 50,
-      herbivore: 20
+      herbivore: 30
     }
   };
 

@@ -7,8 +7,8 @@
 }
 .tile {
   display: inline-block;
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
 }
 .plant, .herbivore, .carnivore {
   position: absolute;
@@ -20,17 +20,26 @@
   height: 20px;
   width: 20px;
   line-height: 20px;
-  background-color: blue;
+  background-color: brown;
 }
 .herbivore {
   height: 10px;
   width: 10px;
   line-height: 10px;
+  background-color: blue;
+}
+.carnivore {
   background-color: deeppink;
 }
 #cycle {
   position: fixed;
   top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+#spawn-herbivores {
+  position: fixed;
+  top: 40px;
   right: 20px;
   cursor: pointer;
 }

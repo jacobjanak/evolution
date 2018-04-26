@@ -16,26 +16,27 @@ require([
   let $world = $('#world');
 
   // script begins
-  $world.empty()
-  spawnTiles(config.world)
+  spawnTiles()
   spawnPlants()
-  spawnHerbivores()
-  spawnCarnivores()
-  updateWorld()
+  updateColors()
+  updateText()
   // script ends
 
-  function spawnTiles(world) {
+  function spawnTiles() {
+    // delete everything
+    $world.empty()
+
     // generate new tile objects
     tiles = [];
-    let tileCount = world.height * world.width;
+    let tileCount = config.world.height * config.world.width;
     for (i = 0; i < tileCount; i++) {
       tiles.push(new Tile())
     }
 
     // DOM tile grid where i = rows, j = columns
-    for (i = 0; i < world.height; i++) {
+    for (i = 0; i < config.world.height; i++) {
       let $row = $('<div class="row">');
-      for (j = 0; j < world.width; j++) {
+      for (j = 0; j < config.world.width; j++) {
         $row.append(Tile.createElement())
       }
       $world.append($row)
@@ -90,13 +91,13 @@ require([
 
   function updateWorld() {
     growPlants()
+    reproducePlants()
     moveHerbivores()
     feedHerbivores()
-    reproducePlants()
     reproduceHerbivores()
+    doubleCheck()
     updateColors()
     updateText()
-    doubleCheck()
   }
 
   function updateColors() {
@@ -112,52 +113,6 @@ require([
     plants.forEach((plant, i) => {
       const parentTile = tiles[find.tile(plant)];
       plant.grow(parentTile.fertility)
-    })
-  }
-
-  function moveHerbivores() {
-    herbivores.forEach((herbivore) => {
-      // moving
-      const adjacentTileIDs = find.adjacentTiles(herbivore);
-      // convert ID's to Tile obejcts
-      let adjacentTiles = new Object();
-      for (k in adjacentTileIDs) {
-        adjacentTiles[k] = tiles[adjacentTileIDs[k]];
-      }
-
-      const direction = find.direction(herbivore, adjacentTiles);
-      herbivore.move(direction)
-    })
-  }
-
-  function feedHerbivores() {
-    herbivores.forEach((herbivore, i) => {
-      // update hunger
-      herbivore.hunger -= 3;
-
-      // eat plants
-      plants.forEach((plant, j) => {
-        if (Math.abs(herbivore.x - plant.x) <= config.plantSize &&
-          Math.abs(herbivore.y - plant.y) <= config.plantSize) {
-          let amountToEat = Math.round((100 - herbivore.hunger) * 100);
-          if (plant.growth < amountToEat) {
-            amountToEat = plant.growth;
-
-            // plant dies
-            $('#' + plant.id).remove()
-            plants.splice(j, 1);
-          } else {
-            plant.growth -= amountToEat;
-          }
-          herbivore.hunger += Math.round(amountToEat / 100);
-        }
-      })
-
-      // herbivore dies if hunger is 0 or less
-      if (herbivore.hunger <= 0) {
-        $('#' + herbivore.id).remove()
-        herbivores.splice(i, 1);
-      }
     })
   }
 
@@ -185,12 +140,57 @@ require([
             Math.abs(plants[i].y - plants[j].y) <= config.plantSize) {
             // plant dies
             $('#' + plants[j].id).remove()
-            plants.splice(i, 1);
-            break;
+            plants.splice(j, 1);
           }
         }
       }
     }
+  }
+
+  function moveHerbivores() {
+    herbivores.forEach((herbivore) => {
+      // moving
+      const adjacentTileIDs = find.adjacentTiles(herbivore);
+      // convert ID's to Tile obejcts
+      let adjacentTiles = new Object();
+      for (k in adjacentTileIDs) {
+        adjacentTiles[k] = tiles[adjacentTileIDs[k]];
+      }
+
+      const direction = find.direction(herbivore, adjacentTiles);
+      herbivore.move(direction)
+    })
+  }
+
+  function feedHerbivores() {
+    herbivores.forEach((herbivore, i) => {
+      // update hunger
+      herbivore.hunger -= 5;
+
+      // eat plants
+      plants.forEach((plant, j) => {
+        if (Math.abs(herbivore.x - plant.x) <= config.plantSize &&
+          Math.abs(herbivore.y - plant.y) <= config.plantSize) {
+          let amountToEat = Math.round(100 - herbivore.hunger);
+          if (plant.growth <= amountToEat) {
+            amountToEat = plant.growth;
+
+            // plant dies
+            $('#' + plant.id).remove()
+            plants.splice(j, 1);
+          } else {
+            plant.growth -= amountToEat;
+          }
+          herbivore.hunger += amountToEat;
+        }
+      })
+
+      // herbivore dies if hunger is 0 or less
+      if (herbivore.hunger <= 0) {
+        $('#' + herbivore.id).remove()
+        herbivores.splice(i, 1);
+      }
+    })
   }
 
   function reproduceHerbivores() {
@@ -210,7 +210,7 @@ require([
 
   function updateText() {
     plants.forEach((plant) => {
-      $('#' + plant.id).text(Math.round(plant.growth / 10))
+      $('#' + plant.id).text(plant.growth)
     })
 
     herbivores.forEach((herbivore) => {
@@ -232,18 +232,6 @@ require([
         console.log('Found a bug - tkaue')
       }
     })
-    plants.forEach((plant) => {
-      let shouldExist = false;
-      $.each($('.plant'), (i, $plant) => {
-        if (plant.id === $($plant).attr('id')) {
-          shouldExist = true;
-        }
-      })
-      if (!shouldExist) {
-        $($plant).remove()
-        console.log('Found a bug - ytcmv')
-      }
-    })
   }
 
   // DEBUG //
@@ -253,5 +241,9 @@ require([
   // DEBUG //
 
   $('#cycle').on('click', updateWorld)
+  $('#spawn-herbivores').on('click', spawnHerbivores)
+  $('.tile').on('click', function() {
+    console.log(herbivores)
+  })
   $(document).on('keyup', updateWorld)
 })
