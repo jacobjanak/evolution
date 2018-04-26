@@ -4,16 +4,18 @@ require([
   'models/Tile',
   'models/Plant',
   'models/Herbivore',
+  'models/Carnivore',
   'utilities/collision',
   'utilities/find',
   'utilities/touching'
-], function($, config, Tile, Plant, Herbivore, collision, find, touching) {
+], function($, config, Tile, Plant, Herbivore, Carnivore, collision, find, touching) {
 
   // global variables
   let i, j, k;
   let tiles = [];
   let plants = [];
   let herbivores = [];
+  let carnivores = [];
   let $world = $('#world');
 
   // initial page load
@@ -81,7 +83,12 @@ require([
   }
 
   function spawnCarnivores() {
-
+    // generate new herbivore objects
+    for (i = 0; i < config.spawnCount.carnivores; i++) {
+      const newCarnivore = new Carnivore();
+      newCarnivore.spawn()
+      carnivores.push(newCarnivore);
+    }
   }
 
   // maintenence
@@ -91,9 +98,15 @@ require([
     moveHerbivores()
     feedHerbivores()
     reproduceHerbivores()
-    // doubleCheck()
+    moveCarnivores()
+    feedCarnivores()
+    reproduceCarnivores()
     updateDOM()
   }
+
+  setInterval(function() {
+    updateWorld()
+  }, 100)
 
   function reproducePlants() {
     plants.forEach((plant) => {
@@ -170,7 +183,7 @@ require([
           size: config.plantSize
         })
         if (isTouching) {
-          let amountToEat = Math.round(100 - herbivore.hunger);
+          let amountToEat = Math.round(99 - herbivore.hunger);
           if (plant.growth <= amountToEat) {
             amountToEat = plant.growth;
 
@@ -207,6 +220,71 @@ require([
     })
   }
 
+  function moveCarnivores() {
+    carnivores.forEach((carnivore) => {
+      // moving
+      const adjacentTileIDs = find.adjacentTiles(carnivore);
+      // convert ID's to Tile obejcts
+      let adjacentTiles = new Object();
+      for (k in adjacentTileIDs) {
+        adjacentTiles[k] = tiles[adjacentTileIDs[k]];
+      }
+
+      const direction = find.direction(carnivore, adjacentTiles);
+      carnivore.move(direction)
+    })
+  }
+
+  function feedCarnivores() {
+    carnivores.forEach((carnivore, i) => {
+      // update hunger
+      carnivore.hunger -= 2;
+
+      // eat herbivores
+      if (carnivore.hunger <= 90) {
+        herbivores.forEach((herbivore, j) => {
+          const isTouching = touching({
+            x: carnivore.x,
+            y: carnivore.y,
+            size: config.animalSize
+          }, {
+            x: herbivore.x,
+            y: herbivore.y,
+            size: config.animalSize
+          })
+          if (isTouching) {
+            carnivore.hunger = 99;
+
+            // herbivore dies
+            $('#' + herbivore.id).remove()
+            herbivores.splice(j, 1);
+          }
+        })
+
+        // herbivore dies if hunger is 0 or less
+        if (carnivore.hunger <= 0) {
+          $('#' + carnivore.id).remove()
+          carnivores.splice(i, 1);
+        }
+      }
+    })
+  }
+
+  function reproduceCarnivores() {
+    carnivores.forEach((carnivore) => {
+      if (carnivore.reproductionCycle === 0) {
+        let newCarnivore = carnivore.reproduce();
+        if (newCarnivore) {
+          newCarnivore.spawn()
+          carnivores.push(newCarnivore)
+          carnivore.reproductionCycle = config.reproductionRate.carnivore;
+        }
+      } else {
+        carnivore.reproductionCycle--
+      }
+    })
+  }
+
   function updateDOM() {
     // update tile color
     $.each($('.tile'), function(i, tile) {
@@ -223,34 +301,14 @@ require([
     herbivores.forEach((herbivore) => {
       $('#' + herbivore.id).text(herbivore.hunger)
     })
-  }
-
-  function doubleCheck() {
-    // make sure no plants got left behind
-    $.each($('.plant'), (i, $plant) => {
-      let shouldExist = false;
-      plants.forEach((plant) => {
-        if (plant.id === $($plant).attr('id')) {
-          shouldExist = true;
-        }
-      })
-      if (!shouldExist) {
-        $($plant).remove()
-        console.log('Found a bug - tkaue')
-      }
+    carnivores.forEach((carnivore) => {
+      $('#' + carnivore.id).text(carnivore.hunger)
     })
   }
 
-  // DEBUG //
-  window.tiles = tiles;
-  window.plants = plants;
-  window.herbivores = herbivores;
-  // DEBUG //
 
+  $(document).on('keyup', updateWorld)
   $('#cycle').on('click', updateWorld)
   $('#spawn-herbivores').on('click', spawnHerbivores)
-  $('.tile').on('click', function() {
-    console.log(herbivores)
-  })
-  $(document).on('keyup', updateWorld)
+  $('#spawn-carnivores').on('click', spawnCarnivores)
 })

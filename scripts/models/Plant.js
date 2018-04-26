@@ -20,11 +20,14 @@ define(['../config', '../utilities/random'], function(config, random) {
     }
 
     grow(fertility) {
+      const maxGrowth = Math.round(fertility * 1000);
+
       // need to round because JS is bad at math
-      this.growth += Math.round(fertility * 10);
+      if (this.growth < maxGrowth) {
+        this.growth += Math.round(fertility * 10);
+      }
 
       // limit the max number
-      const maxGrowth = Math.round(fertility * 1000);
       if (this.growth > maxGrowth) this.growth = maxGrowth;
     }
 

@@ -4,9 +4,9 @@ define([
   '../utilities/random'
 ], function(config, Animal, random) {
 
-  class Herbivore extends Animal {
+  class Carnivore extends Animal {
     spawn() {
-      let $e = $('<div class="herbivore">');
+      let $e = $('<div class="carnivore">');
       $e.attr('id', this.id)
       $e.css({
         top: this.y,
@@ -16,8 +16,8 @@ define([
     }
 
     reproduce() {
-      let offspring = new Herbivore();
-      offspring.reproductionCycle = config.reproductionRate.herbivore * 2;
+      let offspring = new Carnivore();
+      offspring.reproductionCycle = config.reproductionRate.carnivore * 2;
       offspring.x = this.x;
       offspring.y = this.y;
 
@@ -31,5 +31,5 @@ define([
     }
   }
 
-  return Herbivore;
+  return Carnivore;
 })
