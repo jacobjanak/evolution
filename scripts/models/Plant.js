@@ -3,8 +3,8 @@ define(['../config', '../utilities/random'], function(config, random) {
   class Plant {
     constructor() {
       this.id = random.randStr(8);
-      this.x = random.randInt(1, config.world.width * config.tileSize - config.plantSize);
-      this.y = random.randInt(1, config.world.height * config.tileSize - config.plantSize);
+      this.x = random.randInt(1, config.world.width * config.size.tile - config.size.plant);
+      this.y = random.randInt(1, config.world.height * config.size.tile - config.size.plant);
       this.growth = 0;
       this.reproductionCycle = random.randInt(1, config.reproductionRate.plant + 1);
     }
@@ -24,7 +24,7 @@ define(['../config', '../utilities/random'], function(config, random) {
 
       // need to round because JS is bad at math
       if (this.growth < maxGrowth) {
-        this.growth += Math.round(fertility * 10);
+        this.growth += Math.round(fertility * 5);
       }
 
       // limit the max number
@@ -35,16 +35,16 @@ define(['../config', '../utilities/random'], function(config, random) {
       let offspring = new Plant();
       offspring.reproductionCycle = config.reproductionRate.plant + 1;
 
-      const randomX = random.randInt(config.plantSize * -3, config.plantSize * 3);
-      const randomY = random.randInt(config.plantSize * -3, config.plantSize * 3);
+      const randomX = random.randInt(config.size.plant * -3, config.size.plant * 3);
+      const randomY = random.randInt(config.size.plant * -3, config.size.plant * 3);
       offspring.x = this.x + randomX;
       offspring.y = this.y + randomY;
 
       const limit = {
         top: 0,
         left: 0,
-        right: config.world.width * config.tileSize - config.plantSize,
-        bottom: config.world.height * config.tileSize - config.plantSize
+        right: config.world.width * config.size.tile - config.size.plant,
+        bottom: config.world.height * config.size.tile - config.size.plant
       };
 
       if (offspring.y >= limit.top && offspring.x >= limit.left

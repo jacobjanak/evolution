@@ -1,0 +1,29 @@
+.input-with-button {
+  position: relative;
+  margin-bottom: 10px;
+  text-align: right;
+}
+.input-with-button > input {
+  height: 25px;
+  width: 40px;
+  padding-left: 10px;
+  border-radius: 4px;
+  border: 1px solid black;
+}
+.input-with-button > button {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  height: 20px;
+  width: 20px;
+  border: none;
+  border-radius: 100%;
+  outline: none;
+  background: transparent;
+  text-align: center;
+  font-weight: bold;
+  padding: 2px;
+}
+.input-with-button > button:hover {
+  cursor: pointer;
+}

@@ -6,8 +6,8 @@ define([
   const find = {
     coords: (organism) => {
       const coords = {
-        row: Math.floor(organism.y / config.tileSize),
-        column: Math.floor(organism.x / config.tileSize)
+        row: Math.floor(organism.y / config.size.tile),
+        column: Math.floor(organism.x / config.size.tile)
       };
 
       return coords;
@@ -23,7 +23,7 @@ define([
     adjacentTiles: (organism) => {
       const coords = find.coords(organism);
       const tileID = find.tile(organism);
-      
+
       let adjacentTileIDs = { current: tileID };
 
       // top

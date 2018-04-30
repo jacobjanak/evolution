@@ -1,10 +1,12 @@
 define(function() {
 
   const config = {
-    tileSize: 200,
-    plantSize: 20,
-    animalSize: 10,
     hungerLoss: 3,
+    size: {
+      tile: 200,
+      plant: 20,
+      animal: 10
+    },
     world: {
       height: 3,
       width: 3
@@ -15,7 +17,7 @@ define(function() {
       carnivores: 2
     },
     reproductionRate: {
-      plant: 250,
+      plant: 100,
       herbivore: 50,
       carnivore: 30
     }

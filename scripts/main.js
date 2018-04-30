@@ -5,10 +5,9 @@ require([
   'models/Plant',
   'models/Herbivore',
   'models/Carnivore',
-  'utilities/collision',
   'utilities/find',
   'utilities/touching'
-], function($, config, Tile, Plant, Herbivore, Carnivore, collision, find, touching) {
+], function($, config, Tile, Plant, Herbivore, Carnivore, find, touching) {
 
   // global variables
   let i, j, k;
@@ -22,9 +21,13 @@ require([
   start()
 
   function start() {
+    tiles = [];
+    plants = [];
+    herbivores = [];
+    carnivores = [];
     spawnTiles()
-    spawnPlants()
     updateDOM()
+    updateStyleTag()
   }
 
   function spawnTiles() {
@@ -32,7 +35,6 @@ require([
     $world.empty()
 
     // generate new tile objects
-    tiles = [];
     let tileCount = config.world.height * config.world.width;
     for (i = 0; i < tileCount; i++) {
       tiles.push(new Tile())
@@ -58,11 +60,11 @@ require([
         let isTouching = touching({
           x: newPlant.x,
           y: newPlant.y,
-          size: config.plantSize
+          size: config.size.plant
         }, {
           x: plant.x,
           y: plant.y,
-          size: config.plantSize
+          size: config.size.plant
         })
         if (isTouching) hasSpace = false;
       })
@@ -92,6 +94,10 @@ require([
   }
 
   // maintenence
+  setInterval(function() {
+    updateWorld()
+  }, 100)
+
   function updateWorld() {
     reproducePlants()
     feedPlants()
@@ -104,10 +110,6 @@ require([
     updateDOM()
   }
 
-  setInterval(function() {
-    updateWorld()
-  }, 100)
-
   function reproducePlants() {
     plants.forEach((plant) => {
       if (plant.reproductionCycle === 0) {
@@ -118,11 +120,11 @@ require([
             const isTouching = touching({
               x: newPlant.x,
               y: newPlant.y,
-              size: config.plantSize
+              size: config.size.plant
             }, {
               x: plant2.x,
               y: plant2.y,
-              size: config.plantSize
+              size: config.size.plant
             })
             if (isTouching) hasSpace = false;
           })
@@ -176,11 +178,11 @@ require([
         const isTouching = touching({
           x: herbivore.x,
           y: herbivore.y,
-          size: config.animalSize
+          size: config.size.animal
         }, {
           x: plant.x,
           y: plant.y,
-          size: config.plantSize
+          size: config.size.plant
         })
         if (isTouching) {
           let amountToEat = Math.round(99 - herbivore.hunger);
@@ -246,11 +248,11 @@ require([
           const isTouching = touching({
             x: carnivore.x,
             y: carnivore.y,
-            size: config.animalSize
+            size: config.size.animal
           }, {
             x: herbivore.x,
             y: herbivore.y,
-            size: config.animalSize
+            size: config.size.animal
           })
           if (isTouching) {
             carnivore.hunger = 99;
@@ -306,9 +308,32 @@ require([
     })
   }
 
+  function updateStyleTag() {
+    $('style').text(`
+      .plant {
+        height: ${config.size.plant}px;
+        width: ${config.size.plant}px;
+        line-height: ${config.size.plant}px;
+      }
+      .herbivore, .carnivore {
+        height: ${config.size.animal}px;
+        width: ${config.size.animal}px;
+        line-height: ${config.size.animal}px;
+      }
+    `)
+  }
 
-  $(document).on('keyup', updateWorld)
-  $('#cycle').on('click', updateWorld)
-  $('#spawn-herbivores').on('click', spawnHerbivores)
-  $('#spawn-carnivores').on('click', spawnCarnivores)
+  // menu
+  let collapsibles = $('.collapsible');
+  for (i = 0; i < collapsibles.length; i++) {
+    $(collapsibles[i]).on('click', function() {
+      $(this).toggleClass('active')
+      $(this).next('.content').toggle()
+    })
+  }
+
+  $('#new-world').on('click', start)
+  $('#spawn-plant').on('click', spawnPlants)
+  $('#spawn-herbivore').on('click', spawnHerbivores)
+  $('#spawn-carnivore').on('click', spawnCarnivores)
 })

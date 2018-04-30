@@ -5,14 +5,61 @@
     <title>Evolution</title>
     <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/collapsible.css" />
+    <link rel="stylesheet" href="assets/css/buttons.css" />
+    <link rel="stylesheet" href="assets/css/inputs.css" />
     <script data-main="scripts/main.js" src="scripts/libraries/require.js"></script>
+    <style>
+      /* populated by JS */
+    </style>
   </head>
   <body>
+
+    <!-- Menu -->
+    <nav id="menu">
+      <button class="collapsible">Statistics</button>
+      <div class="content">
+
+      </div>
+      <button class="collapsible">Settings</button>
+      <div class="content">
+        <div class="input-with-button">
+          <label for="tile-size">Tile size</label>
+          <input id="tile-size" type="text" value="100" />
+          <button id="erase">X</button>
+        </div>
+        <div class="input-with-button">
+          <label for="plant-size">Plant size</label>
+          <input id="plant-size" type="text" value="20" />
+          <button id="erase">X</button>
+        </div>
+        <div class="input-with-button">
+          <label for="herbivore-size">Herbivore size</label>
+          <input id="herbivore-size" type="text" value="10" />
+          <button id="erase">X</button>
+        </div>
+        <div class="input-with-button">
+          <label for="carnivore-size">Carnivore size</label>
+          <input id="carnivore-size" type="text" value="10" />
+          <button id="erase">X</button>
+        </div>
+      </div>
+      <button class="collapsible">Actions</button>
+      <div class="content">
+        <button id="new-world" class="btn btn-stripe">New world</button>
+        <button id="spawn-plant" class="btn btn-stripe">Spawn plants</button>
+        <button id="spawn-herbivore" class="btn btn-stripe">Spawn herbivores</button>
+        <button id="spawn-carnivore" class="btn btn-stripe">Spawn carnivores</button>
+      </div>
+    </nav>
+    <!-- End Menu -->
+
     <div id="world">
       <!-- populated by JS -->
     </div>
 
-    <div id="spawn-herbivores">Spawn Herbivores</div>
-    <div id="spawn-carnivores">Spawn Carnivores</div>
+    <!-- <div id="spawn-herbivores">Spawn Herbivores</div>
+    <div id="spawn-carnivores">Spawn Carnivores</div> -->
+
   </body>
 </html>
