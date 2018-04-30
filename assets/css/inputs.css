@@ -1,16 +1,27 @@
-.input-with-button {
+.input-header {
+  text-align: left;
+  margin: 12px 0 4px;
+}
+.input-header:first-child {
+  margin-top: 0;
+}
+.input-container {
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+  text-align: left;
+}
+.input-container > input {
+  height: 14px;
+  width: 48px;
+  border-radius: 6px;
+  border: 2px solid black;
+  margin-right: 5px;
   text-align: right;
 }
-.input-with-button > input {
-  height: 25px;
-  width: 40px;
-  padding-left: 10px;
-  border-radius: 4px;
-  border: 1px solid black;
-}
-.input-with-button > button {
+
+/* This code can add a nice 'X' button:
+
+.input-container > button {
   position: absolute;
   top: 4px;
   right: 0;
@@ -24,6 +35,6 @@
   font-weight: bold;
   padding: 2px;
 }
-.input-with-button > button:hover {
+.input-container > button:hover {
   cursor: pointer;
-}
+} */

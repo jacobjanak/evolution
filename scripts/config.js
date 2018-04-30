@@ -1,11 +1,15 @@
 define(function() {
 
   const config = {
-    hungerLoss: 3,
+    hunger: {
+      herbivore: 3,
+      carnivore: 2
+    },
     size: {
       tile: 200,
       plant: 20,
-      animal: 10
+      herbivore: 10,
+      carnivore: 10
     },
     world: {
       height: 3,

@@ -50,11 +50,11 @@
 .btn-stripe:hover {
   background-color: #555;
   color: #fff;
-  border-color: #000;
+  border-color: black;
 }
 .btn-stripe:hover:after {
   background-image: repeating-linear-gradient(45deg, #fff, #fff 1px, transparent 2px, transparent 5px);
-  border-top: 1px solid #000;
+  border-top: 1px solid black;
   -webkit-animation: stripe-slide 12s infinite linear forwards;
   animation: stripe-slide 12s infinite linear forwards;
 }

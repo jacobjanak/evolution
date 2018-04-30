@@ -6,10 +6,10 @@ define([
   class Animal {
     constructor() {
       this.id = random.randStr(8);
-      this.x = random.randInt(1, config.world.width * config.size.tile - config.size.animal);
-      this.y = random.randInt(1, config.world.height * config.size.tile - config.size.animal);
+      this.x = random.randInt(1, config.world.width * config.size.tile - config.size.herbivore);
+      this.y = random.randInt(1, config.world.height * config.size.tile - config.size.herbivore);
       this.preference = Number(Math.random().toFixed(2));
-      this.speed = config.size.animal;
+      this.speed = config.size.herbivore;
       this.hunger = 99;
       this.reproductionCycle = random.randInt(1, config.reproductionRate.herbivore + 1);
     }
@@ -50,8 +50,8 @@ define([
       const limit = {
         top: 0,
         left: 0,
-        right: config.world.width * config.size.tile - config.size.animal,
-        bottom: config.world.height * config.size.tile - config.size.animal
+        right: config.world.width * config.size.tile - config.size.herbivore,
+        bottom: config.world.height * config.size.tile - config.size.herbivore
       };
 
       if (this.y < limit.top) this.y = limit.top;

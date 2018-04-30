@@ -1,4 +1,6 @@
-don't pass in the whole animal object if you only need the coords
-make it so plants need a bit of space between each other
-add customizable stuff
+refactor a lot of stuff
+> config doesn't need to be its own file
+> don't pass in the whole animal object if you only need the coords
+> if the user shrinks the world, destroy creatures that are outside of the new world boundaries
+add kills, offspring, and age to the animals
 make more traits subject to mutation

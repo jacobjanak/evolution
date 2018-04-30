@@ -25,9 +25,11 @@ require([
     plants = [];
     herbivores = [];
     carnivores = [];
+    updateConfig()
+    updateStatistics()
+    updateStyleTag()
     spawnTiles()
     updateDOM()
-    updateStyleTag()
   }
 
   function spawnTiles() {
@@ -108,6 +110,7 @@ require([
     feedCarnivores()
     reproduceCarnivores()
     updateDOM()
+    updateStatistics()
   }
 
   function reproducePlants() {
@@ -171,14 +174,14 @@ require([
   function feedHerbivores() {
     herbivores.forEach((herbivore, i) => {
       // update hunger
-      herbivore.hunger -= config.hungerLoss;
+      herbivore.hunger -= config.hunger.herbivore;
 
       // eat plants
       plants.forEach((plant, j) => {
         const isTouching = touching({
           x: herbivore.x,
           y: herbivore.y,
-          size: config.size.animal
+          size: config.size.herbivore
         }, {
           x: plant.x,
           y: plant.y,
@@ -240,7 +243,7 @@ require([
   function feedCarnivores() {
     carnivores.forEach((carnivore, i) => {
       // update hunger
-      carnivore.hunger -= 2;
+      carnivore.hunger -= config.hunger.carnivore;
 
       // eat herbivores
       if (carnivore.hunger <= 90) {
@@ -248,11 +251,11 @@ require([
           const isTouching = touching({
             x: carnivore.x,
             y: carnivore.y,
-            size: config.size.animal
+            size: config.size.carnivore
           }, {
             x: herbivore.x,
             y: herbivore.y,
-            size: config.size.animal
+            size: config.size.herbivore
           })
           if (isTouching) {
             carnivore.hunger = 99;
@@ -308,8 +311,49 @@ require([
     })
   }
 
+  function updateConfig() {
+    config.world.height = Number($('#world-height').val());
+    config.world.width = Number($('#world-width').val());
+    config.size.tile = Number($('#tile-size').val());
+    config.size.plant = Number($('#plant-size').val());
+    config.size.herbivore = Number($('#herbivore-size').val());
+    config.size.carnivore = Number($('#carnivore-size').val());
+    config.spawnCount.plants = Number($('#plant-count').val());
+    config.spawnCount.herbivores = Number($('#herbivore-count').val());
+    config.spawnCount.carnivores = Number($('#carnivore-count').val());
+    config.reproductionRate.plant = Number($('#plant-reproduction').val());
+    config.reproductionRate.herbivore = Number($('#herbivore-reproduction').val());
+    config.reproductionRate.carnivore = Number($('#carnivore-reproduction').val());
+    console.log(config)
+  }
+
+  function updateStatistics() {
+    // population
+    $('#number-of-plants').text(plants.length)
+    $('#number-of-herbivores').text(herbivores.length)
+    $('#number-of-carnivores').text(carnivores.length)
+    // preference
+    let totalPreference = 0;
+    herbivores.forEach((herbivore) => {
+      totalPreference += herbivore.preference;
+    })
+    let avgPreference = totalPreference ? (totalPreference / herbivores.length).toFixed(2) : '0.00';
+    $('#herbivore-preference').text(avgPreference)
+
+    totalPreference = 0;
+    carnivores.forEach((carnivore) => {
+      totalPreference += carnivore.preference;
+    })
+    avgPreference = totalPreference ? (totalPreference / carnivores.length).toFixed(2) : '0.00';
+    $('#carnivore-preference').text(avgPreference)
+  }
+
   function updateStyleTag() {
     $('style').text(`
+      .tile {
+        height: ${config.size.tile}px;
+        width: ${config.size.tile}px;
+      }
       .plant {
         height: ${config.size.plant}px;
         width: ${config.size.plant}px;
@@ -327,6 +371,14 @@ require([
   let collapsibles = $('.collapsible');
   for (i = 0; i < collapsibles.length; i++) {
     $(collapsibles[i]).on('click', function() {
+      // close all tabs that are already open
+      $.each(collapsibles, (i, collapsible) => {
+        if (this !== collapsible) {
+          $(collapsible).removeClass('active')
+          $(collapsible).next('.content').hide()
+        }
+      })
+      // open or close the new one
       $(this).toggleClass('active')
       $(this).next('.content').toggle()
     })
@@ -336,4 +388,9 @@ require([
   $('#spawn-plant').on('click', spawnPlants)
   $('#spawn-herbivore').on('click', spawnHerbivores)
   $('#spawn-carnivore').on('click', spawnCarnivores)
+
+  $('.settings').on('change', function() {
+    updateConfig()
+    updateStyleTag()
+  })
 })
