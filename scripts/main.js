@@ -359,10 +359,15 @@ require([
         width: ${config.size.plant}px;
         line-height: ${config.size.plant}px;
       }
-      .herbivore, .carnivore {
-        height: ${config.size.animal}px;
-        width: ${config.size.animal}px;
-        line-height: ${config.size.animal}px;
+      .herbivore {
+        height: ${config.size.herbivore}px;
+        width: ${config.size.herbivore}px;
+        line-height: ${config.size.herbivore}px;
+      }
+      .carnivore {
+        height: ${config.size.carnivore}px;
+        width: ${config.size.carnivore}px;
+        line-height: ${config.size.carnivore}px;
       }
     `)
   }

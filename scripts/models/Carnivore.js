@@ -5,6 +5,14 @@ define([
 ], function(config, Animal, random) {
 
   class Carnivore extends Animal {
+    constructor() {
+      super()
+      this.x = random.randInt(1, config.world.width * config.size.tile - config.size.carnivore);
+      this.y = random.randInt(1, config.world.height * config.size.tile - config.size.carnivore);
+      this.speed = config.size.carnivore;
+      this.reproductionCycle = random.randInt(1, config.reproductionRate.carnivore + 1);
+    }
+
     spawn() {
       let $e = $('<div class="carnivore">');
       $e.attr('id', this.id)

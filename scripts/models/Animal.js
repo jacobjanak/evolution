@@ -6,12 +6,8 @@ define([
   class Animal {
     constructor() {
       this.id = random.randStr(8);
-      this.x = random.randInt(1, config.world.width * config.size.tile - config.size.herbivore);
-      this.y = random.randInt(1, config.world.height * config.size.tile - config.size.herbivore);
       this.preference = Number(Math.random().toFixed(2));
-      this.speed = config.size.herbivore;
       this.hunger = 99;
-      this.reproductionCycle = random.randInt(1, config.reproductionRate.herbivore + 1);
     }
 
     move(direction) {
