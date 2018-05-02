@@ -4,10 +4,15 @@ define([
 ], function(config, random) {
 
   class Animal {
-    constructor() {
+    constructor(genetics) {
+      // static traits
       this.id = random.randStr(8);
-      this.preference = Number(Math.random().toFixed(2));
       this.hunger = 99;
+
+      // inherited traits
+      this.x = genetics.x || random.randInt(1, config.world.width * config.size.tile - genetics.size);
+      this.y = genetics.y || random.randInt(1, config.world.height * config.size.tile - genetics.size);
+      this.preference = genetics.preference || Number(Math.random().toFixed(2));
     }
 
     move(direction) {

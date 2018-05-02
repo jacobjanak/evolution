@@ -5,10 +5,9 @@ define([
 ], function(config, Animal, random) {
 
   class Herbivore extends Animal {
-    constructor() {
-      super()
-      this.x = random.randInt(1, config.world.width * config.size.tile - config.size.herbivore);
-      this.y = random.randInt(1, config.world.height * config.size.tile - config.size.herbivore);
+    constructor(genetics = {}) {
+      if (!genetics.size) genetics.size = config.size.herbivore;
+      super(genetics)
       this.speed = config.size.herbivore;
       this.reproductionCycle = random.randInt(1, config.reproductionRate.herbivore + 1);
     }
