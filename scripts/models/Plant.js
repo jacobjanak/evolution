@@ -1,7 +1,7 @@
 define(['../config', '../utilities/random'], function(config, random) {
 
   class Plant {
-    constructor() {
+    constructor(genetics = {}) {
       this.id = random.randStr(8);
       this.x = random.randInt(1, config.world.width * config.size.tile - config.size.plant);
       this.y = random.randInt(1, config.world.height * config.size.tile - config.size.plant);
@@ -32,13 +32,14 @@ define(['../config', '../utilities/random'], function(config, random) {
     }
 
     reproduce() {
-      let offspring = new Plant();
-      offspring.reproductionCycle = config.reproductionRate.plant + 1;
-
       const randomX = random.randInt(config.size.plant * -3, config.size.plant * 3);
       const randomY = random.randInt(config.size.plant * -3, config.size.plant * 3);
-      offspring.x = this.x + randomX;
-      offspring.y = this.y + randomY;
+
+      let offspring = new Plant({
+        x: this.x + randomX,
+        y: this.y + randomY,
+        reproductionCycle: config.reproductionRate.plant + 1
+      });
 
       const limit = {
         top: 0,

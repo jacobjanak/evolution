@@ -8,7 +8,7 @@ define([
     constructor(genetics = {}) {
       if (!genetics.size) genetics.size = config.size.herbivore;
       super(genetics)
-      this.speed = config.size.herbivore;
+      this.speed = this.size;
       this.reproductionCycle = random.randInt(1, config.reproductionRate.herbivore + 1);
     }
 
@@ -17,7 +17,10 @@ define([
       $e.attr('id', this.id)
       $e.css({
         top: this.y,
-        left: this.x
+        left: this.x,
+        height: this.size,
+        width: this.size,
+        lineHeight: this.size
       })
       $('#world').append($e)
     }

@@ -8,10 +8,11 @@ define([
       // static traits
       this.id = random.randStr(8);
       this.hunger = 99;
+      this.size = genetics.size;
 
       // inherited traits
-      this.x = genetics.x || random.randInt(1, config.world.width * config.size.tile - genetics.size);
-      this.y = genetics.y || random.randInt(1, config.world.height * config.size.tile - genetics.size);
+      this.x = genetics.x || random.randInt(1, config.world.width * config.size.tile - this.size);
+      this.y = genetics.y || random.randInt(1, config.world.height * config.size.tile - this.size);
       this.preference = genetics.preference || Number(Math.random().toFixed(2));
     }
 
@@ -30,11 +31,7 @@ define([
 
         // randomly choose top/bottom or left/right
         randomBool = Math.random() >= 0.5;
-        if (randomBool) {
-          this.x += distance;
-        } else {
-          this.y += distance;
-        }
+        randomBool ? this.x += distance : this.y += distance;
       }
 
       // make sure it's not overflowing
@@ -56,9 +53,9 @@ define([
       };
 
       if (this.y < limit.top) this.y = limit.top;
-      else if (this.x < limit.left) this.x = limit.left;
-      else if (this.x > limit.right) this.x = limit.right;
-      else if (this.y > limit.bottom) this.y = limit.bottom;
+      if (this.x < limit.left) this.x = limit.left;
+      if (this.x > limit.right) this.x = limit.right;
+      if (this.y > limit.bottom) this.y = limit.bottom;
     }
   }
 

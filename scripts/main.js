@@ -181,7 +181,7 @@ require([
         const isTouching = touching({
           x: herbivore.x,
           y: herbivore.y,
-          size: config.size.herbivore
+          size: herbivore.size
         }, {
           x: plant.x,
           y: plant.y,
@@ -248,15 +248,7 @@ require([
       // eat herbivores
       if (carnivore.hunger <= 90) {
         herbivores.forEach((herbivore, j) => {
-          const isTouching = touching({
-            x: carnivore.x,
-            y: carnivore.y,
-            size: config.size.carnivore
-          }, {
-            x: herbivore.x,
-            y: herbivore.y,
-            size: config.size.herbivore
-          })
+          const isTouching = touching(carnivore, herbivore)
           if (isTouching) {
             carnivore.hunger = 99;
 
@@ -358,16 +350,6 @@ require([
         height: ${config.size.plant}px;
         width: ${config.size.plant}px;
         line-height: ${config.size.plant}px;
-      }
-      .herbivore {
-        height: ${config.size.herbivore}px;
-        width: ${config.size.herbivore}px;
-        line-height: ${config.size.herbivore}px;
-      }
-      .carnivore {
-        height: ${config.size.carnivore}px;
-        width: ${config.size.carnivore}px;
-        line-height: ${config.size.carnivore}px;
       }
     `)
   }
