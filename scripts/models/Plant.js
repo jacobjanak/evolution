@@ -3,8 +3,9 @@ define(['../config', '../utilities/random'], function(config, random) {
   class Plant {
     constructor(genetics = {}) {
       this.id = random.randStr(8);
-      this.x = random.randInt(1, config.world.width * config.size.tile - config.size.plant);
-      this.y = random.randInt(1, config.world.height * config.size.tile - config.size.plant);
+      this.size = config.size.plant;
+      this.x = random.randInt(1, config.world.width * config.size.tile - this.size);
+      this.y = random.randInt(1, config.world.height * config.size.tile - this.size);
       this.growth = 0;
       this.reproductionCycle = random.randInt(1, config.reproductionRate.plant + 1);
     }

@@ -6,8 +6,8 @@ require([
   'models/Herbivore',
   'models/Carnivore',
   'utilities/find',
-  'utilities/touching'
-], function($, config, Tile, Plant, Herbivore, Carnivore, find, touching) {
+  'utilities/isTouching'
+], function($, config, Tile, Plant, Herbivore, Carnivore, find, isTouching) {
 
   // global variables
   let i, j, k;
@@ -59,16 +59,7 @@ require([
       // check if it has space to spawn
       let hasSpace = true;
       plants.forEach((plant) => {
-        let isTouching = touching({
-          x: newPlant.x,
-          y: newPlant.y,
-          size: config.size.plant
-        }, {
-          x: plant.x,
-          y: plant.y,
-          size: config.size.plant
-        })
-        if (isTouching) hasSpace = false;
+        if (isTouching(newPlant, plant)) hasSpace = false;
       })
       if (hasSpace) {
         newPlant.spawn()
@@ -120,16 +111,7 @@ require([
         if (newPlant) {
           let hasSpace = true;
           plants.forEach((plant2, j) => {
-            const isTouching = touching({
-              x: newPlant.x,
-              y: newPlant.y,
-              size: config.size.plant
-            }, {
-              x: plant2.x,
-              y: plant2.y,
-              size: config.size.plant
-            })
-            if (isTouching) hasSpace = false;
+            if (isTouching(newPlant, plant2)) hasSpace = false;
           })
           if (hasSpace) {
             newPlant.spawn()
@@ -178,16 +160,7 @@ require([
 
       // eat plants
       plants.forEach((plant, j) => {
-        const isTouching = touching({
-          x: herbivore.x,
-          y: herbivore.y,
-          size: herbivore.size
-        }, {
-          x: plant.x,
-          y: plant.y,
-          size: config.size.plant
-        })
-        if (isTouching) {
+        if (isTouching(herbivore, plant)) {
           let amountToEat = Math.round(99 - herbivore.hunger);
           if (plant.growth <= amountToEat) {
             amountToEat = plant.growth;
@@ -248,8 +221,7 @@ require([
       // eat herbivores
       if (carnivore.hunger <= 90) {
         herbivores.forEach((herbivore, j) => {
-          const isTouching = touching(carnivore, herbivore)
-          if (isTouching) {
+          if (isTouching(carnivore, herbivore)) {
             carnivore.hunger = 99;
 
             // herbivore dies
