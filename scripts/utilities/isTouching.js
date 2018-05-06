@@ -1,6 +1,4 @@
-define([
-  '../config'
-], function(config) {
+define(function() {
 
   function touching(thing1, thing2) {
     // if they are the same size things are a little easier
@@ -43,9 +41,6 @@ define([
       }
       return false;
     }
-
-    console.log('You have a BUG my good sir!')
-    return false;
   }
 
   return touching;

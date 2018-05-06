@@ -12,18 +12,6 @@ define([
       this.reproductionCycle = random.randInt(1, config.reproductionRate.herbivore + 1);
     }
 
-    spawn() {
-      let $e = $('<div class="herbivore">');
-      $e.attr('id', this.id)
-      $e.css({
-        top: this.y,
-        left: this.x,
-        height: this.size,
-        width: this.size
-      })
-      $('#world').append($e)
-    }
-
     reproduce() {
       let offspring = new Herbivore();
       offspring.reproductionCycle = config.reproductionRate.herbivore * 2;

@@ -3,6 +3,9 @@ define([
   './random'
 ], function(config, random) {
 
+  // global variables
+  let k;
+
   const find = {
     coords: (organism) => {
       const coords = {
@@ -24,6 +27,7 @@ define([
       const coords = find.coords(organism);
       const tileID = find.tile(organism);
 
+      // current
       let adjacentTileIDs = { current: tileID };
 
       // top
@@ -47,24 +51,22 @@ define([
     },
 
     direction: (organism, adjacentTiles) => {
-      // this object will store data on the current best tile
-      let best = {
-        direction: false,
-        difference: false
-      }
-
       // iterate over adjacent tiles and update the best tile
-      for (let k in adjacentTiles) {
-        // adding randomness to the algorithm
-        const randomness = random.randInt(-25, 25) / 100;
-        const difference = Math.abs(adjacentTiles[k].fertility - organism.preference);
-        if (isNaN(difference)) {
-          console.log('OMG WHAT IS HAPPENING')
-        }
-        // check if this beats the best
-        if (!best.direction || difference <= best.difference) {
-          best.direction = k;
-          best.difference = difference;
+      let best;
+      for (k in adjacentTiles) {
+
+        // difference between this tile and organism's ideal tile
+        const randomness = random.randInt(-10, 10) / 100;
+        const difference = Math.abs(
+          adjacentTiles[k].fertility - organism.preference + randomness
+        );
+
+        // check if this beats the best or if there's no best yet
+        if (!best || difference <= best.difference) {
+          best = {
+            direction: k,
+            difference: difference
+          };
         }
       }
 

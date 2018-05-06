@@ -5,9 +5,10 @@ require([
   'models/Plant',
   'models/Herbivore',
   'models/Carnivore',
+  'views/spawn',
   'utilities/find',
   'utilities/isTouching'
-], function($, config, Tile, Plant, Herbivore, Carnivore, find, isTouching) {
+], function($, config, Tile, Plant, Herbivore, Carnivore, spawn, find, isTouching) {
 
   // global variables
   let i, j, k;
@@ -61,9 +62,11 @@ require([
       plants.forEach((plant) => {
         if (isTouching(newPlant, plant)) hasSpace = false;
       })
+
+      // spawn it if there's enough space for it
       if (hasSpace) {
-        newPlant.spawn()
         plants.push(newPlant)
+        spawn(newPlant, 'plant')
       }
     }
   }
@@ -71,18 +74,18 @@ require([
   function spawnHerbivores() {
     // generate new herbivore objects
     for (i = 0; i < config.spawnCount.herbivores; i++) {
-      const newHerbivore = new Herbivore();
-      newHerbivore.spawn()
-      herbivores.push(newHerbivore);
+      const herbivore = new Herbivore();
+      spawn(herbivore, 'herbivore')
+      herbivores.push(herbivore);
     }
   }
 
   function spawnCarnivores() {
     // generate new herbivore objects
     for (i = 0; i < config.spawnCount.carnivores; i++) {
-      const newCarnivore = new Carnivore();
-      newCarnivore.spawn()
-      carnivores.push(newCarnivore);
+      const carnivore = new Carnivore();
+      spawn(carnivore, 'carnivore')
+      carnivores.push(carnivore);
     }
   }
 
@@ -114,7 +117,7 @@ require([
             if (isTouching(newPlant, plant2)) hasSpace = false;
           })
           if (hasSpace) {
-            newPlant.spawn()
+            spawn(newPlant, 'plant')
             plants.push(newPlant)
             plant.reproductionCycle = config.reproductionRate.plant;
           }
@@ -188,7 +191,7 @@ require([
       if (herbivore.reproductionCycle === 0) {
         let newHerbivore = herbivore.reproduce();
         if (newHerbivore) {
-          newHerbivore.spawn()
+          spawn(newHerbivore, 'herbivore')
           herbivores.push(newHerbivore)
           herbivore.reproductionCycle = config.reproductionRate.herbivore;
         }
@@ -244,7 +247,7 @@ require([
       if (carnivore.reproductionCycle === 0) {
         let newCarnivore = carnivore.reproduce();
         if (newCarnivore) {
-          newCarnivore.spawn()
+          spawn(newCarnivore, 'carnivore')
           carnivores.push(newCarnivore)
           carnivore.reproductionCycle = config.reproductionRate.carnivore;
         }

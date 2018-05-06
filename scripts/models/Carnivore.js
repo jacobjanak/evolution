@@ -12,18 +12,6 @@ define([
       this.reproductionCycle = random.randInt(1, config.reproductionRate.carnivore + 1);
     }
 
-    spawn() {
-      let $e = $('<div class="carnivore">');
-      $e.attr('id', this.id)
-      $e.css({
-        top: this.y,
-        left: this.x,
-        height: this.size,
-        width: this.size
-      })
-      $('#world').append($e)
-    }
-
     reproduce() {
       let offspring = new Carnivore();
       offspring.reproductionCycle = config.reproductionRate.carnivore * 2;
