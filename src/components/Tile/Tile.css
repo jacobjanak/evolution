@@ -1,0 +1,5 @@
+.tile {
+  display: inline-block;
+  /* prevents vertical space between tiles */
+  vertical-align: top;
+}
