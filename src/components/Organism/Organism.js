@@ -9,4 +9,12 @@ class Organism extends React.Component {
     // genetics.size = 5;
     // this.state = genetics;
   }
+
+  render() {
+    return(
+      <div>Hi</div>
+    )
+  }
 }
+
+export default Organism;

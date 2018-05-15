@@ -1,14 +1,16 @@
 import React from 'react';
 import Organism from '../Organism';
 
-class Animal extends Organism {
+class Animal extends React.Component {
   constructor() {
     super()
   }
 
   render() {
     return (
-      <p>Hello</p>
+      <Organism />
     );
   }
 }
+
+export default Animal;
