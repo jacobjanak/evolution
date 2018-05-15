@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 // COMPONENTS
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from './lib/registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
