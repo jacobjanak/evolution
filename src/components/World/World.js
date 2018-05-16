@@ -2,7 +2,8 @@ import React from 'react';
 import Menu from '../Menu';
 import Settings from '../Settings';
 import Tile from '../Tile';
-import Herbivore from '../Herbivore';
+import Organism from '../Organism';
+import HerbivoreModel from '../../models/Herbivore'
 import settings from '../../settings';
 import './World.css';
 
@@ -16,9 +17,12 @@ class World extends React.Component {
       height: settings.world.height,
       width: settings.world.width,
       tiles: [],
+      plants: [],
       herbivores: [],
       carnivores: []
     };
+
+    this.state.herbivores = this.state.herbivores.concat(this.spawn(HerbivoreModel, 20));
   }
 
   updateTiles() {
@@ -32,14 +36,16 @@ class World extends React.Component {
       }
     }
     else if (difference < 0) {
-      for (i = 0; i > difference; i--) {
-        this.state.tiles.pop()
-      }
+      this.state.tiles.length = tilesNeeded;
     }
   }
 
-  changeSetting() {
-
+  spawn(Model, count) {
+    const spawned = [];
+    for (i = 0; i < count; i++) {
+      spawned.push(new Model(settings))
+    }
+    return spawned;
   }
 
   render() {
@@ -72,11 +78,21 @@ class World extends React.Component {
     // make/remove tiles
     this.updateTiles()
 
+
+    console.log(this.state.herbivores)
+
     return (
       <div>
         <Settings onChange={handleSettingChange} />
         <div id="world" style={style}>
-          { this.state.tiles.map((tile, i) => <Tile settings={settings} key={i} />) }
+
+          { this.state.tiles.map((tile, i) => {
+            return <Tile settings={settings} key={i} />
+          })}
+
+          { this.state.herbivores.map((herbivore, i) => {
+            return <Organism model={herbivore} key={i} />
+          })}
 
         </div>
       </div>

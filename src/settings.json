@@ -5,5 +5,13 @@
   },
   "tile": {
     "size": 200
+  },
+  "herbivore": {
+    "size": 5,
+    "reproduction": 50
+  },
+  "carnivore": {
+    "size": 5,
+    "reproduction": 50
   }
 }
