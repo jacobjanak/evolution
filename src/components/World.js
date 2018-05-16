@@ -2,6 +2,7 @@ import React from 'react';
 import Tile from './Tile';
 import Herbivore from './Herbivore';
 import settings from '../settings';
+import Settings from './Settings';
 
 let i, j;
 
@@ -31,10 +32,32 @@ class World extends React.Component {
       width: this.state.width * settings.tile.size + 'px'
     };
 
+    const changeSetting = (action, value) => {
+      switch (action) {
+        case 'world-height':
+          this.setState({ height: value });
+          break;
+        case 'world-width':
+          this.setState({ width: value })  
+        break;
+        default:
+          break;
+      }
+    }
+
+    const handleSettingChange = (action, value) => {
+      if (value.length > 0) {
+       changeSetting(action, value);
+      }      
+    };
+
     return (
-      <div id="world" style={style}>
-        { this.state.tiles.map((tile, i) => <Tile key={i} />) }
-        <Herbivore />
+      <div>
+        <Settings onChange={handleSettingChange} />
+        <div id="world" style={style}>
+          { this.state.tiles.map((tile, i) => <Tile key={i} />) }
+          <Herbivore />
+        </div>
       </div>
     );
   }
