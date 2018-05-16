@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from '../Menu';
+import Settings from '../Settings';
 import Tile from '../Tile';
 import Herbivore from '../Herbivore';
 import settings from '../../settings';
@@ -18,13 +19,6 @@ class World extends React.Component {
       herbivores: [],
       carnivores: []
     };
-
-    // make tiles
-    for (i = 0; i < this.state.height; i++) {
-      for (j = 0; j < this.state.width; j++) {
-        this.state.tiles.push(<Tile />)
-      }
-    }
   }
 
   render() {
@@ -35,13 +29,36 @@ class World extends React.Component {
       width: this.state.width * settings.tile.size + 'px'
     };
 
-    // <Herbivore settings={settings} genetics={{}} />
+    const changeSetting = (action, value) => {
+      switch (action) {
+        case 'world-height':
+          this.setState({ height: value });
+          break;
+        case 'world-width':
+          this.setState({ width: value })
+          break;
+        default:
+          break;
+      }
+    }
+
+    const handleSettingChange = (action, value) => {
+      if (value.length > 0) {
+       changeSetting(action, value);
+      }
+    };
+
+    // make tiles
+    const worldArea = this.state.height * this.state.width;
+    for (i = 0; i < worldArea; i++) {
+      this.state.tiles.push(<Tile />)
+    }
 
     return (
       <div>
-        <Menu />
+        <Settings onChange={handleSettingChange} />
         <div id="world" style={style}>
-          { tiles.map((tile, i) => <Tile settings={settings} key={i} />) }
+          { this.state.tiles.map((tile, i) => <Tile settings={settings} key={i} />) }
 
         </div>
       </div>

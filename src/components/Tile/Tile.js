@@ -1,6 +1,6 @@
 import React from 'react';
 import random from '../../utils/random';
-import "./Tile.css";
+import './Tile.css';
 
 class Tile extends React.Component {
   constructor() {
