@@ -21,6 +21,27 @@ class World extends React.Component {
     };
   }
 
+  updateTiles() {
+    const existingTiles = this.state.tiles.length;
+    const tilesNeeded = this.state.height * this.state.width;
+
+    const difference = tilesNeeded - existingTiles;
+    if (difference > 0) {
+      for (i = 0; i < difference; i++) {
+        this.state.tiles.push(<Tile />)
+      }
+    }
+    else if (difference < 0) {
+      for (i = 0; i > difference; i--) {
+        this.state.tiles.pop()
+      }
+    }
+  }
+
+  changeSetting() {
+
+  }
+
   render() {
     const { tiles, plants, herbivores, carnivores } = this.state;
 
@@ -48,11 +69,8 @@ class World extends React.Component {
       }
     };
 
-    // make tiles
-    const worldArea = this.state.height * this.state.width;
-    for (i = 0; i < worldArea; i++) {
-      this.state.tiles.push(<Tile />)
-    }
+    // make/remove tiles
+    this.updateTiles()
 
     return (
       <div>
