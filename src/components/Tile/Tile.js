@@ -1,6 +1,5 @@
 import React from 'react';
 import random from '../../utils/random';
-import settings from '../../settings';
 import "./Tile.css";
 
 class Tile extends React.Component {
@@ -14,8 +13,8 @@ class Tile extends React.Component {
 
   render() {
     const style = {
-      height: settings.tile.size + 'px',
-      width: settings.tile.size + 'px',
+      height: this.props.settings.tile.size + 'px',
+      width: this.props.settings.tile.size + 'px',
       backgroundColor: 'rgb(' + (200 - (100 * this.state.fertility)) + ', 200, 100)'
     }
 

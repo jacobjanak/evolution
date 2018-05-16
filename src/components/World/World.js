@@ -1,7 +1,9 @@
 import React from 'react';
-import Tile from './Tile';
-import Herbivore from './Herbivore';
-import settings from '../settings';
+import Menu from '../Menu';
+import Tile from '../Tile';
+import Herbivore from '../Herbivore';
+import settings from '../../settings';
+import './World.css';
 
 let i, j;
 
@@ -26,15 +28,22 @@ class World extends React.Component {
   }
 
   render() {
+    const { tiles, plants, herbivores, carnivores } = this.state;
+
     const style = {
       height: this.state.height * settings.tile.size + 'px',
       width: this.state.width * settings.tile.size + 'px'
     };
 
+    // <Herbivore settings={settings} genetics={{}} />
+
     return (
-      <div id="world" style={style}>
-        { this.state.tiles.map((tile, i) => <Tile key={i} />) }
-        <Herbivore />
+      <div>
+        <Menu />
+        <div id="world" style={style}>
+          { tiles.map((tile, i) => <Tile settings={settings} key={i} />) }
+
+        </div>
       </div>
     );
   }

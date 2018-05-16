@@ -8,7 +8,7 @@ class Animal extends React.Component {
 
   render() {
     return (
-      <Organism />
+      <Organism className={this.props.className || ''} />
     );
   }
 }
