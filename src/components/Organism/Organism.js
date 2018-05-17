@@ -1,18 +1,20 @@
 import React from 'react';
+import './Organism.css';
 
 class Organism extends React.Component {
-  constructor(props) {
-    super()
-  }
-
   render() {
+    const { model } = this.props;
+
     const style = {
-      height: this.props.model.size,
-      width: this.props.model.size
+      top: model.y + 'px',
+      left: model.x + 'px',
+      height: model.size,
+      width: model.size,
+      backgroundColor: model.color
     };
 
     return (
-      <div style={style}></div>
+      <div className="organism" style={style}></div>
     );
   }
 }

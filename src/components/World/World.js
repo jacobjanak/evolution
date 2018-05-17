@@ -3,7 +3,10 @@ import Menu from '../Menu';
 import Settings from '../Settings';
 import Tile from '../Tile';
 import Organism from '../Organism';
+
+import TileModel from '../../models/Tile'
 import HerbivoreModel from '../../models/Herbivore'
+
 import settings from '../../settings';
 import './World.css';
 
@@ -22,17 +25,18 @@ class World extends React.Component {
       carnivores: []
     };
 
-    this.state.herbivores = this.state.herbivores.concat(this.spawn(HerbivoreModel, 20));
+    const newHerbivores = this.spawn(HerbivoreModel, 20);
+    this.state.herbivores = this.state.herbivores.concat(newHerbivores);
   }
 
-  updateTiles() {
+  updateTileCount() {
     const existingTiles = this.state.tiles.length;
     const tilesNeeded = this.state.height * this.state.width;
 
     const difference = tilesNeeded - existingTiles;
     if (difference > 0) {
       for (i = 0; i < difference; i++) {
-        this.state.tiles.push(<Tile />)
+        this.state.tiles.push(new TileModel())
       }
     }
     else if (difference < 0) {
@@ -76,7 +80,7 @@ class World extends React.Component {
     };
 
     // make/remove tiles
-    this.updateTiles()
+    this.updateTileCount()
 
 
     console.log(this.state.herbivores)
@@ -87,7 +91,7 @@ class World extends React.Component {
         <div id="world" style={style}>
 
           { this.state.tiles.map((tile, i) => {
-            return <Tile settings={settings} key={i} />
+            return <Tile model={tile} settings={settings} key={i} />
           })}
 
           { this.state.herbivores.map((herbivore, i) => {

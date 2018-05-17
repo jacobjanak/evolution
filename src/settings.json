@@ -1,17 +1,17 @@
 {
   "world": {
-    "height": 3,
-    "width": 5
+    "height": 5,
+    "width": 8
   },
   "tile": {
-    "size": 200
+    "size": 100
   },
   "herbivore": {
-    "size": 5,
+    "size": 10,
     "reproduction": 50
   },
   "carnivore": {
-    "size": 5,
+    "size": 10,
     "reproduction": 50
   }
 }

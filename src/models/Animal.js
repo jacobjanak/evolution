@@ -1,15 +1,12 @@
+import Organism from './Organism';
 import random from '../utils/random';
 
-class Animal {
+class Animal extends Organism {
   constructor(settings, genetics) {
-    // static traits
-    this.hunger = 99;
+    super(settings, genetics)
 
-    // inherited traits
-    this.size = genetics.size;
-    this.x = genetics.x || random.randInt(1, config.world.width * config.size.tile - this.size);
-    this.y = genetics.y || random.randInt(1, config.world.height * config.size.tile - this.size);
-    this.preference = genetics.preference || Number(Math.random().toFixed(2));
+    this.hunger = 99;
+    this.preference = genetics.preference || random.randDecimal(2);
   }
 
   move(direction) {
@@ -32,27 +29,7 @@ class Animal {
     }
 
     // make sure it's not overflowing
-    this.keepInBounds()
-
-    // reposition the element
-    $('#' + this.id).css({
-      top: this.y,
-      left: this.x
-    })
-  }
-
-  keepInBounds() {
-    const limit = {
-      top: 0,
-      left: 0,
-      right: config.world.width * config.size.tile - config.size.herbivore,
-      bottom: config.world.height * config.size.tile - config.size.herbivore
-    };
-
-    if (this.y < limit.top) this.y = limit.top;
-    if (this.x < limit.left) this.x = limit.left;
-    if (this.x > limit.right) this.x = limit.right;
-    if (this.y > limit.bottom) this.y = limit.bottom;
+    // this.keepInBounds()
   }
 }
 

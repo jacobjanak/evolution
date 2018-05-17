@@ -1,10 +1,9 @@
-define(function() {
+import random from '../utils/random';
 
-  class Tile {
-    constructor() {
-      this.fertility = Number(Math.random().toFixed(2));
-    }
+class Tile {
+  constructor() {
+    this.fertility = random.randDecimal(2);
   }
+}
 
-  return Tile;
-})
+export default Tile;
