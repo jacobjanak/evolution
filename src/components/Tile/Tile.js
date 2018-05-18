@@ -3,11 +3,11 @@ import './Tile.css';
 
 class Tile extends React.Component {
   render() {
-    const { model, settings } = this.props;
+    const { model, size } = this.props;
 
     const style = {
-      height: settings.tile.size + 'px',
-      width: settings.tile.size + 'px',
+      height: size + 'px',
+      width: size + 'px',
       backgroundColor: 'rgb(' + (200 - (100 * model.fertility)) + ', 200, 100)'
     }
 

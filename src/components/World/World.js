@@ -1,15 +1,10 @@
 import React from 'react';
-import './World.css';
-
-// models
-import TileModel from '../../models/Tile'
-import HerbivoreModel from '../../models/Herbivore'
-
-// components
-import Menu from '../Menu';
-import Settings from '../Settings';
 import Tile from '../Tile';
 import Organism from '../Organism';
+import PlantModel from '../../models/Plant'
+import HerbivoreModel from '../../models/Herbivore'
+import spawn from '../../utils/spawn';
+import './World.css';
 
 // global variables
 let i;
@@ -25,8 +20,12 @@ class World extends React.Component {
     };
 
     //NOTE: this won't be here
-    // const newHerbivores = this.spawn(HerbivoreModel, 20, props.settings);
-    // this.state.herbivores = this.state.herbivores.concat(newHerbivores);
+    const newPlants = spawn(PlantModel, 20, props.settings);
+    this.state.plants = this.state.plants.concat(newPlants);
+
+    //NOTE: this won't be here
+    const newHerbivores = spawn(HerbivoreModel, 20, props.settings);
+    this.state.herbivores = this.state.herbivores.concat(newHerbivores);
   }
 
   render() {
@@ -43,7 +42,7 @@ class World extends React.Component {
 
         { /* spawning tiles */
           tiles.map((tile, i) => {
-            return <Tile model={tile} settings={settings} key={i} />
+            return <Tile model={tile} size={settings.tile.size} key={i} />
           })
         }
 

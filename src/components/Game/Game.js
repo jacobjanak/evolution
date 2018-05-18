@@ -1,8 +1,9 @@
 import React from 'react';
 import World from '../World';
 import Settings from '../Settings/';
-import TileModel from '../../models/Tile';
 import defaultSettings from '../../settings';
+import TileModel from '../../models/Tile';
+import spawn from '../../utils/spawn';
 
 // global variables
 let i;
@@ -14,14 +15,6 @@ class Game extends React.Component {
       settings: defaultSettings,
       tiles: []
     };
-  }
-
-  spawn(Model, count, settings = {}) {
-    const spawned = [];
-    for (i = 0; i < count; i++) {
-      spawned.push(new Model(settings))
-    }
-    return spawned;
   }
 
   changeSetting = (action, value) => {
@@ -52,11 +45,12 @@ class Game extends React.Component {
       let tiles = this.state.tiles;
 
       if (difference > 0) {
-        const newTiles = this.spawn(TileModel, difference);
+        const newTiles = spawn(TileModel, difference);
         tiles = tiles.concat(newTiles)
       }
 
       else if (difference < 0) {
+        //NOTE: make this fancier so that tiles stay in the same place
         tiles.length = needed;
       }
 
