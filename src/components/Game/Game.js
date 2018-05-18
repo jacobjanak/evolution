@@ -14,6 +14,7 @@ class Game extends React.Component {
       settings: defaultSettings,
       tiles: []
     };
+    this.changeSetting = this.changeSetting.bind(this);
   }
 
   spawn(Model, count, settings = {}) {
@@ -24,7 +25,7 @@ class Game extends React.Component {
     return spawned;
   }
 
-  changeSetting = (action, value) => {
+  changeSetting(action, value) {
     if (value.length > 0) {
       if (action === 'world-height') {
         const newSettings = this.state.settings;
