@@ -5,7 +5,7 @@ class Animal extends Organism {
   constructor(settings, genetics) {
     super(settings, genetics)
 
-    this.hunger = 99;
+    this.health = 99;
     this.preference = genetics.preference || random.randDecimal(2);
   }
 

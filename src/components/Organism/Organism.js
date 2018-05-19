@@ -8,13 +8,16 @@ class Organism extends React.Component {
     const style = {
       top: model.y + 'px',
       left: model.x + 'px',
-      height: model.size,
-      width: model.size,
+      height: model.size + 'px',
+      width: model.size + 'px',
+      lineHeight: model.size + 'px',
       backgroundColor: model.color
     };
 
     return (
-      <div className="organism" style={style}></div>
+      <div className="organism" style={style}>
+        {model.health}
+      </div>
     );
   }
 }

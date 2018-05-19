@@ -3,6 +3,7 @@ import Tile from '../Tile';
 import Organism from '../Organism';
 import PlantModel from '../../models/Plant'
 import HerbivoreModel from '../../models/Herbivore'
+import CarnivoreModel from '../../models/Carnivore'
 import spawn from '../../utils/spawn';
 import './World.css';
 
@@ -26,6 +27,10 @@ class World extends React.Component {
     //NOTE: this won't be here
     const newHerbivores = spawn(HerbivoreModel, 20, props.settings);
     this.state.herbivores = this.state.herbivores.concat(newHerbivores);
+
+    //NOTE: this won't be here
+    const newCarnivores = spawn(CarnivoreModel, 5, props.settings);
+    this.state.carnivores = this.state.carnivores.concat(newCarnivores);
   }
 
   render() {
@@ -46,9 +51,21 @@ class World extends React.Component {
           })
         }
 
+        { /* spawning plants */
+          plants.map((plant, i) => {
+            return <Organism model={plant} key={i} />
+          })
+        }
+
         { /* spawning herbivores */
           herbivores.map((herbivore, i) => {
             return <Organism model={herbivore} key={i} />
+          })
+        }
+
+        { /* spawning herbivores */
+          carnivores.map((carnivore, i) => {
+            return <Organism model={carnivore} key={i} />
           })
         }
 

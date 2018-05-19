@@ -1,32 +1,17 @@
-define([
-  '../config',
-  './Animal',
-  '../utilities/random'
-], function(config, Animal, random) {
+import Animal from './Animal';
+import random from '../utils/random';
 
-  class Carnivore extends Animal {
-    constructor(genetics = {}) {
-      if (!genetics.size) genetics.size = config.size.carnivore;
-      super(genetics)
-      this.speed = this.size;
-      this.reproductionCycle = random.randInt(1, config.reproductionRate.carnivore + 1);
-    }
+class Carnivore extends Animal {
+  constructor(settings, genetics = {}) {
+    // size is needed by parent class(es)
+    if (!genetics.size) genetics.size = settings.carnivore.size;
 
-    reproduce() {
-      let offspring = new Carnivore();
-      offspring.reproductionCycle = config.reproductionRate.carnivore * 2;
-      offspring.x = this.x;
-      offspring.y = this.y;
+    super(settings, genetics)
 
-      // preference gets inherited with some randomness
-      let randomness = random.randInt(-20, 20) / 100;
-      offspring.preference = Number((this.preference + randomness).toFixed(2));
-      if (offspring.preference > 0.99) offspring.preference = 0.99;
-      else if (offspring.preference < 0) offspring.preference = 0;
-
-      return offspring;
-    }
+    this.color = 'red';
+    this.speed = this.size;
+    this.reproduction = settings.carnivore.reproduction;
   }
+}
 
-  return Carnivore;
-})
+export default Carnivore;
