@@ -9,7 +9,7 @@ class Carnivore extends Animal {
     super(settings, genetics)
 
     this.color = 'red';
-    this.speed = this.size;
+    this.speed = 10; //NOTE: change this
     this.reproduction = settings.carnivore.reproduction;
   }
 }

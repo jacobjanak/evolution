@@ -9,8 +9,8 @@ class Herbivore extends Animal {
     super(settings, genetics)
 
     this.color = 'blue';
-    this.reproduction = settings.herbivore.reproduction;
     this.speed = 10; //NOTE: change this
+    this.reproduction = settings.herbivore.reproduction;
   }
 }
 

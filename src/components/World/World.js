@@ -4,11 +4,9 @@ import Organism from '../Organism';
 import PlantModel from '../../models/Plant'
 import HerbivoreModel from '../../models/Herbivore'
 import CarnivoreModel from '../../models/Carnivore'
-import spawn from '../../utils/spawn';
+import { spawn, feed } from '../../utils';
 import './World.css';
 
-// global variables
-let i;
 
 class World extends React.Component {
   constructor(props) {
@@ -33,9 +31,34 @@ class World extends React.Component {
     this.state.carnivores = this.state.carnivores.concat(newCarnivores);
   }
 
-  render() {
-    const { plants, herbivores, carnivores } = this.state;
+  /* a cycle is one unit of time in the simulation */
+  cycle = () => {
     const { settings, tiles } = this.props;
+    const { plants, herbivores, carnivores } = this.state;
+
+    const newPlants = feed.plants(plants, tiles, settings);
+
+    this.setState({
+      plants: newPlants
+    })
+    // reproducePlants()
+    // 1. feedPlants()
+    // moveHerbivores()
+    // feedHerbivores()
+    // reproduceHerbivores()
+    // moveCarnivores()
+    // feedCarnivores()
+    // reproduceCarnivores()
+    // updateDOM()
+    // updateStatistics()
+  }
+
+  render() {
+    const { settings, tiles } = this.props;
+    const { plants, herbivores, carnivores } = this.state;
+
+    // creating one array for more DRY code
+    const organisms = [].concat(plants, herbivores, carnivores);
 
     const style = {
       height: settings.world.height * settings.tile.size + 'px',
@@ -51,23 +74,13 @@ class World extends React.Component {
           })
         }
 
-        { /* spawning plants */
-          plants.map((plant, i) => {
-            return <Organism model={plant} key={i} />
+        { /* spawning organisms */
+          organisms.map((organism, i) => {
+            return <Organism model={organism} key={i} />
           })
         }
 
-        { /* spawning herbivores */
-          herbivores.map((herbivore, i) => {
-            return <Organism model={herbivore} key={i} />
-          })
-        }
-
-        { /* spawning herbivores */
-          carnivores.map((carnivore, i) => {
-            return <Organism model={carnivore} key={i} />
-          })
-        }
+        <div onClick={this.cycle}>Next Cycle</div>
 
       </div>
     );
