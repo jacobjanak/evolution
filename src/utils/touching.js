@@ -1,5 +1,5 @@
 
-function isTouching(thing1, thing2) {
+function touching(thing1, thing2) {
   // if they are the same size things are a little easier
   if (thing1.size === thing2.size) {
     if (Math.abs(thing1.x - thing2.x) <= thing1.size &&
@@ -42,4 +42,4 @@ function isTouching(thing1, thing2) {
   }
 }
 
-export default isTouching;
+export default touching;

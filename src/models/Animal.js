@@ -19,13 +19,9 @@ class Animal extends Organism {
     else if (direction === 'bottom') this.y += distance;
     else if (direction === 'current') {
 
-      // randomly choose top/left or right/bottom
-      let randomBool = Math.random() >= 0.5;
-      if (randomBool) distance = 0 - distance;
-
-      // randomly choose top/bottom or left/right
-      randomBool = Math.random() >= 0.5;
-      randomBool ? this.x += distance : this.y += distance;
+      // randomly choose top/left/right/bottom
+      if (Math.random() >= 0.5) distance = 0 - distance;
+      Math.random() >= 0.5 ? this.x += distance : this.y += distance;
     }
 
     // make sure it's not overflowing

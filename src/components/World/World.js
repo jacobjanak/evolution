@@ -33,21 +33,24 @@ class World extends React.Component {
 
   /* a cycle is one unit of time in the simulation */
   cycle = () => {
-    const { settings, tiles } = this.props;
-    let { plants, herbivores, carnivores } = this.state;
+    setInterval(() => {
+      const { settings, tiles } = this.props;
+      let { plants, herbivores, carnivores } = this.state;
 
-    plants = feed.plants(plants, tiles, settings);
-    plants = reproduce.plants(plants, settings);
+      plants = feed.plants(plants, tiles, settings);
+      plants = reproduce.plants(plants, settings);
 
-    this.setState({
-      plants: plants
-    })
+      this.setState({
+        plants: plants
+      })
+    }, 100)
+
     // 2. reproducePlants()
     // 1. feedPlants()
-    // moveHerbivores()
+    // 3. moveHerbivores()
     // feedHerbivores()
-    // reproduceHerbivores()
-    // moveCarnivores()
+    // 4. reproduceHerbivores()
+    // 3. moveCarnivores()
     // feedCarnivores()
     // reproduceCarnivores()
     // updateDOM()

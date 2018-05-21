@@ -2,3 +2,8 @@ make sure settings only affect new organisms and not existing ones
 give an index file to like all the folders to reduce import statements
 change name of isTouching to touching
 get plants to stop flickering if they spawn on a desert
+I'm reevaluating the limit obj in a lot of different files
+> get all the limit stuff out of plant.reproduce
+make speed a trait
+rename the random.js methods
+make fertility and preference an int

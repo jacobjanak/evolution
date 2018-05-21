@@ -1,14 +1,16 @@
+import Organism from './Organism';
 import random from '../utils/random';
 
-class Plant {
+class Plant extends Organism {
   constructor(settings, genetics = {}) {
-    this.id = random.randStr(8);
-    this.color = 'brown';
-    this.size = settings.plant.size;
-    this.x = random.randInt(1, settings.world.width * settings.tile.size - this.size);
-    this.y = random.randInt(1, settings.world.height * settings.tile.size - this.size);
+    // properties needed by parent class(es)
+    if (!genetics.size) genetics.size = settings.plant.size;
+    genetics.reproduction = genetics.reproduction || settings.plant.reproduction;
+
+    super(settings, genetics)
+
+    this.color = genetics.color || settings.plant.color;
     this.health = 0;
-    this.reproduction = random.randInt(1, settings.plant.reproduction + 1);
   }
 
   grow(fertility) {

@@ -3,14 +3,14 @@ import random from '../utils/random';
 
 class Carnivore extends Animal {
   constructor(settings, genetics = {}) {
-    // size is needed by parent class(es)
+    // properties needed by parent class(es)
     if (!genetics.size) genetics.size = settings.carnivore.size;
+    genetics.reproduction = genetics.reproduction || settings.carnivore.reproduction;
 
     super(settings, genetics)
 
-    this.color = 'red';
+    this.color = genetics.color || settings.carnivore.color;
     this.speed = 10; //NOTE: change this
-    this.reproduction = settings.carnivore.reproduction;
   }
 }
 

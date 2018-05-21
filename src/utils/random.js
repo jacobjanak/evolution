@@ -9,6 +9,11 @@ const random = {
 
   randStr: (length) => {
     return (Math.random() + 1).toString(36).substr(2, length)
+  },
+
+  mutation: (num) => {
+    const randomness = Math.round(num / 10);
+    return random.randInt(num - randomness, num + randomness);
   }
 }
 
