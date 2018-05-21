@@ -12,6 +12,6 @@ const feed = {
 
     return plants;
   }
-}
+};
 
 export default feed;

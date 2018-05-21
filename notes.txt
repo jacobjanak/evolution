@@ -1,1 +1,4 @@
+make sure settings only affect new organisms and not existing ones
 give an index file to like all the folders to reduce import statements
+change name of isTouching to touching
+get plants to stop flickering if they spawn on a desert

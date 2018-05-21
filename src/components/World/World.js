@@ -4,7 +4,7 @@ import Organism from '../Organism';
 import PlantModel from '../../models/Plant'
 import HerbivoreModel from '../../models/Herbivore'
 import CarnivoreModel from '../../models/Carnivore'
-import { spawn, feed } from '../../utils';
+import { spawn, feed, reproduce } from '../../utils';
 import './World.css';
 
 
@@ -34,14 +34,15 @@ class World extends React.Component {
   /* a cycle is one unit of time in the simulation */
   cycle = () => {
     const { settings, tiles } = this.props;
-    const { plants, herbivores, carnivores } = this.state;
+    let { plants, herbivores, carnivores } = this.state;
 
-    const newPlants = feed.plants(plants, tiles, settings);
+    plants = feed.plants(plants, tiles, settings);
+    plants = reproduce.plants(plants, settings);
 
     this.setState({
-      plants: newPlants
+      plants: plants
     })
-    // reproducePlants()
+    // 2. reproducePlants()
     // 1. feedPlants()
     // moveHerbivores()
     // feedHerbivores()
