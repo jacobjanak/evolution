@@ -2,7 +2,6 @@ import React from 'react';
 import World from '../World';
 import Settings from '../Settings/';
 import defaultSettings from '../../settings';
-import TileModel from '../../models/Tile';
 import spawn from '../../utils/spawn';
 
 // global variables
@@ -45,8 +44,7 @@ class Game extends React.Component {
       let tiles = this.state.tiles;
 
       if (difference > 0) {
-        const newTiles = spawn(TileModel, difference);
-        tiles = tiles.concat(newTiles)
+        tiles = spawn.tiles(difference, tiles);
       }
 
       else if (difference < 0) {

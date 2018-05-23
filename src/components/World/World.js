@@ -1,10 +1,7 @@
 import React from 'react';
 import Tile from '../Tile';
 import Organism from '../Organism';
-import PlantModel from '../../models/Plant'
-import HerbivoreModel from '../../models/Herbivore'
-import CarnivoreModel from '../../models/Carnivore'
-import { spawn, feed, reproduce } from '../../utils';
+import { spawn, feed, reproduce, move } from '../../utils';
 import './World.css';
 
 
@@ -12,23 +9,15 @@ class World extends React.Component {
   constructor(props) {
     super()
 
+    const plants = spawn.plants(20, [], props.settings);
+    const herbivores = spawn.herbivores(20, [], props.settings);
+    const carnivores = spawn.carnivores(5, [], props.settings);
+
     this.state = {
-      plants: [],
-      herbivores: [],
-      carnivores: []
+      plants: plants,
+      herbivores: herbivores,
+      carnivores: carnivores
     };
-
-    //NOTE: this won't be here
-    const newPlants = spawn(PlantModel, 20, props.settings);
-    this.state.plants = this.state.plants.concat(newPlants);
-
-    //NOTE: this won't be here
-    const newHerbivores = spawn(HerbivoreModel, 20, props.settings);
-    this.state.herbivores = this.state.herbivores.concat(newHerbivores);
-
-    //NOTE: this won't be here
-    const newCarnivores = spawn(CarnivoreModel, 5, props.settings);
-    this.state.carnivores = this.state.carnivores.concat(newCarnivores);
   }
 
   /* a cycle is one unit of time in the simulation */
@@ -39,9 +28,11 @@ class World extends React.Component {
 
       plants = feed.plants(plants, tiles, settings);
       plants = reproduce.plants(plants, settings);
+      herbivores = move(herbivores, tiles, settings);
 
       this.setState({
-        plants: plants
+        plants: plants,
+        herbivores: herbivores
       })
     }, 100)
 

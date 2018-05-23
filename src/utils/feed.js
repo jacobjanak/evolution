@@ -3,7 +3,7 @@ import find from './find'
 const feed = {
   plants: (plants, tiles, settings) => {
     plants.forEach((plant, i) => {
-      const parentTile = tiles[find.tile(plant, settings)];
+      const parentTile = tiles[find.tileID(plant, settings)];
       plant.grow(parentTile.fertility)
 
       // plant dies if its health is 0

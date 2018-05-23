@@ -8,7 +8,7 @@
   },
   "plant": {
     "size": 20,
-    "reproduction": 100,
+    "reproduction": 10,
     "color": "brown"
   },
   "herbivore": {
