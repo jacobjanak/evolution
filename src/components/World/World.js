@@ -9,8 +9,8 @@ class World extends React.Component {
   constructor(props) {
     super()
 
-    const plants = spawn.plants(20, [], props.settings);
-    const herbivores = spawn.herbivores(20, [], props.settings);
+    const plants = spawn.plants(200, [], props.settings);
+    const herbivores = spawn.herbivores(200, [], props.settings);
     const carnivores = spawn.carnivores(5, [], props.settings);
 
     this.state = {
@@ -20,32 +20,27 @@ class World extends React.Component {
     };
   }
 
-  /* a cycle is one unit of time in the simulation */
+  // a cycle is one unit of time in the simulation
   cycle = () => {
     setInterval(() => {
       const { settings, tiles } = this.props;
       let { plants, herbivores, carnivores } = this.state;
 
-      plants = feed.plants(plants, tiles, settings);
       plants = reproduce.plants(plants, settings);
+      plants = feed.plants(plants, tiles, settings);
       herbivores = move(herbivores, tiles, settings);
+      ({ herbivores, plants } = feed.herbivores(herbivores, plants, settings));
+      herbivores = reproduce.herbivores(herbivores, settings);
+      carnivores = move(carnivores, tiles, settings);
+      ({ carnivores, herbivores } = feed.carnivores(carnivores, herbivores, settings));
+      carnivores = reproduce.carnivores(carnivores, settings);
 
       this.setState({
         plants: plants,
-        herbivores: herbivores
+        herbivores: herbivores,
+        carnivores: carnivores
       })
     }, 100)
-
-    // 2. reproducePlants()
-    // 1. feedPlants()
-    // 3. moveHerbivores()
-    // feedHerbivores()
-    // 4. reproduceHerbivores()
-    // 3. moveCarnivores()
-    // feedCarnivores()
-    // reproduceCarnivores()
-    // updateDOM()
-    // updateStatistics()
   }
 
   render() {

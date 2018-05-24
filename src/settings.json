@@ -8,17 +8,19 @@
   },
   "plant": {
     "size": 20,
-    "reproduction": 10,
+    "reproduction": 1,
     "color": "brown"
   },
   "herbivore": {
     "size": 10,
-    "reproduction": 50,
+    "reproduction": 25,
+    "healthLoss": 5,
     "color": "blue"
   },
   "carnivore": {
     "size": 10,
-    "reproduction": 50,
+    "reproduction": 55,
+    "healthLoss": 2,
     "color": "red"
   }
 }
