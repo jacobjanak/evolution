@@ -17,7 +17,7 @@ class Settings extends React.Component {
             min="1" max="100"
             value={settings.world.height}
             onChange={(event) => {
-              settings.world.height = event.target.value;
+              settings.world.height = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -30,7 +30,7 @@ class Settings extends React.Component {
             min="1" max="100"
             value={settings.world.width}
             onChange={(event) => {
-              settings.world.width = event.target.value;
+              settings.world.width = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -47,7 +47,7 @@ class Settings extends React.Component {
             min="1" max="1000"
             value={settings.plant.spawnCount}
             onChange={(event) => {
-              settings.plant.spawnCount = event.target.value;
+              settings.plant.spawnCount = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -60,7 +60,7 @@ class Settings extends React.Component {
             min="1" max="1000"
             value={settings.herbivore.spawnCount}
             onChange={(event) => {
-              settings.herbivore.spawnCount = event.target.value;
+              settings.herbivore.spawnCount = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -73,7 +73,7 @@ class Settings extends React.Component {
             min="1" max="1000"
             value={settings.carnivore.spawnCount}
             onChange={(event) => {
-              settings.carnivore.spawnCount = event.target.value;
+              settings.carnivore.spawnCount = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -90,7 +90,7 @@ class Settings extends React.Component {
             min="20" max="1000"
             value={settings.tile.size}
             onChange={(event) => {
-              settings.tile.size = event.target.value;
+              settings.tile.size = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -103,7 +103,7 @@ class Settings extends React.Component {
             min="1" max="100"
             value={settings.plant.size}
             onChange={(event) => {
-              settings.plant.size = event.target.value;
+              settings.plant.size = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -116,7 +116,7 @@ class Settings extends React.Component {
             min="1" max="100"
             value={settings.herbivore.size}
             onChange={(event) => {
-              settings.herbivore.size = event.target.value;
+              settings.herbivore.size = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -129,7 +129,7 @@ class Settings extends React.Component {
             min="1" max="100"
             value={settings.carnivore.size}
             onChange={(event) => {
-              settings.carnivore.size = event.target.value;
+              settings.carnivore.size = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -146,7 +146,7 @@ class Settings extends React.Component {
             min="0" max="100"
             value={settings.herbivore.healthLoss}
             onChange={(event) => {
-              settings.herbivore.healthLoss = event.target.value;
+              settings.herbivore.healthLoss = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -159,7 +159,7 @@ class Settings extends React.Component {
             min="0" max="100"
             value={settings.carnivore.healthLoss}
             onChange={(event) => {
-              settings.carnivore.healthLoss = event.target.value;
+              settings.carnivore.healthLoss = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -176,7 +176,7 @@ class Settings extends React.Component {
             min="1" max="1000"
             value={settings.herbivore.reproduction}
             onChange={(event) => {
-              settings.herbivore.reproduction = event.target.value;
+              settings.herbivore.reproduction = Number(event.target.value);
               changeSettings(settings)
             }}
           />
@@ -189,7 +189,7 @@ class Settings extends React.Component {
             min="1" max="1000"
             value={settings.carnivore.reproduction}
             onChange={(event) => {
-              settings.carnivore.reproduction = event.target.value;
+              settings.carnivore.reproduction = Number(event.target.value);
               changeSettings(settings)
             }}
           />

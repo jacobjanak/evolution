@@ -16,33 +16,6 @@ const find = {
     return coords.row * settings.world.width + coords.column;
   },
 
-  // adjacentTileIDs: (organism, settings) => {
-  //   const coords = find.coords(organism, settings);
-  //   const tileID = find.tile(organism, settings);
-  //
-    // // current
-    // let adjacentTileIDs = { current: tileID };
-    //
-    // // top
-    // if (coords.row !== 0) {
-    //   adjacentTileIDs.top = tileID - settings.world.width;
-    // }
-    // // left
-    // if (coords.column !== 0) {
-    //   adjacentTileIDs.left = tileID - 1;
-    // }
-    // // right
-    // if (coords.column !== settings.world.width - 1) {
-    //   adjacentTileIDs.right = tileID + 1;
-    // }
-    // // bottom
-    // if (coords.row !== settings.world.height - 1) {
-    //   adjacentTileIDs.bottom = tileID + settings.world.width;
-    // }
-  //
-  //   return adjacentTileIDs;
-  // },
-
   adjacentTiles: (organism, tiles, settings) => {
     const coords = find.coords(organism, settings);
     const tileID = find.tileID(organism, settings, coords);
@@ -63,6 +36,7 @@ const find = {
     }
     // bottom
     if (coords.row !== settings.world.height - 1) {
+      console.log(tileID + settings.world.width)
       adjacentTiles.bottom = tiles[tileID + settings.world.width];
     }
 
