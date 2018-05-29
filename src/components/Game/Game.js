@@ -1,6 +1,6 @@
 import React from 'react';
 import World from '../World';
-import Settings from '../Settings/';
+import Menu from '../Menu';
 import defaultSettings from '../../settings';
 import spawn from '../../utils/spawn';
 
@@ -14,22 +14,12 @@ class Game extends React.Component {
       settings: defaultSettings,
       tiles: []
     };
+
+    this.changeSettings = this.changeSettings.bind(this);
   }
 
-  changeSetting = (action, value) => {
-    if (value.length > 0) {
-      if (action === 'world-height') {
-        const newSettings = this.state.settings;
-        newSettings.world.height = Number(value);
-        this.setState(newSettings);
-      }
-      else if (action === 'world-width') {
-        const newSettings = this.state.settings;
-        newSettings.world.width = Number(value);
-        this.setState({ settings: newSettings });
-      }
-    }
-
+  changeSettings = (newSettings) => {
+    this.setState({ settings: newSettings })
     this.updateTileCount()
   }
 
@@ -63,7 +53,7 @@ class Game extends React.Component {
   render() {
     return (
       <div id="game">
-        <Settings onChange={this.changeSetting} />
+        <Menu settings={this.state.settings} changeSettings={this.changeSettings} />
         <World settings={this.state.settings} tiles={this.state.tiles} />
       </div>
     );

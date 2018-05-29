@@ -4,3 +4,6 @@ make speed a trait
 rename the random.js methods
 make fertility and preference an int
 spawn counts may be less then the user wants
+put mutations into the models themselves and not reproduce.js
+rename move so that it follows the conventions of the other utils
+where should I put global css files?

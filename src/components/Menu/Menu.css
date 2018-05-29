@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   width: 200px;
+  text-transform: uppercase;
   z-index: 100;
 }
 
@@ -13,16 +14,20 @@
   background-color: #777;
   border-bottom: 2px solid black;
   border-right: 2px solid black;
-  text-transform: uppercase;
   text-align: center;
   font-size: 15px;
   color: white;
+  text-transform: uppercase;
   outline: none;
   cursor: pointer;
 }
 
 .active, .collapsible:hover {
   background-color: #555;
+}
+
+.active + .content {
+  display: block;
 }
 
 .content {
@@ -34,4 +39,5 @@
   padding: 12px 18px;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
+  background-color: white;
 }
