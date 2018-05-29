@@ -1,0 +1,23 @@
+.input-header {
+  text-align: left;
+  margin: 12px 0 4px;
+}
+
+.input-header:first-child {
+  margin-top: 0;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.input-container > input {
+  height: 14px;
+  width: 48px;
+  border-radius: 6px;
+  border: 2px solid black;
+  margin-right: 5px;
+  text-align: right;
+}
