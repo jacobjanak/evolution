@@ -4,7 +4,7 @@ import Tile from '../Tile';
 import Organism from '../Organism';
 import defaultSettings from '../../settings';
 import { spawn, feed, reproduce, move, updateTiles } from '../../utils';
-import './World.css';
+import './Game.css';
 
 // global variables
 let i;
@@ -13,24 +13,21 @@ class Game extends React.Component {
   constructor() {
     super()
 
-    const plants = spawn.plants(200, [], defaultSettings);
-    const herbivores = spawn.herbivores(200, [], defaultSettings);
-    const carnivores = spawn.carnivores(5, [], defaultSettings);
-
     this.state = {
       settings: defaultSettings,
       tiles: [],
-      plants: plants,
-      herbivores: herbivores,
-      carnivores: carnivores
+      plants: [],
+      herbivores: [],
+      carnivores: []
     };
 
     this.changeSettings = this.changeSettings.bind(this);
+    this.spawn = this.spawn.bind(this);
+    this.cycle = this.cycle.bind(this);
   }
 
-  changeSettings(newSettings) {
+  componentWillMount() {
     this.updateTileCount()
-    this.setState({ settings: newSettings })
   }
 
   updateTileCount() {
@@ -38,11 +35,29 @@ class Game extends React.Component {
     if (updatedTiles) this.setState({ tiles: updatedTiles });
   }
 
-  componentWillMount() {
+  changeSettings(newSettings) {
+    this.setState({ settings: newSettings })
     this.updateTileCount()
   }
 
-  cycle = () => {
+  spawn(organism) {
+    let { plants, herbivores, carnivores, settings } = this.state;
+
+    if (organism === 'plants') {
+      plants = spawn.plants(settings.plant.spawnCount, plants, settings);
+      this.setState({ plants: plants })
+    }
+    else if (organism === 'herbivores') {
+      herbivores = spawn.herbivores(settings.herbivore.spawnCount, herbivores, settings);
+      this.setState({ herbivores: herbivores })
+    }
+    else if (organism === 'carnivores') {
+      carnivores = spawn.carnivores(settings.carnivore.spawnCount, carnivores, settings);
+      this.setState({ carnivores: carnivores })
+    }
+  }
+
+  cycle() {
     setInterval(() => {
       let { settings, tiles, plants, herbivores, carnivores } = this.state;
 
@@ -73,11 +88,17 @@ class Game extends React.Component {
     };
 
     return (
-      <div id="game world" style={style}>
-        <Menu settings={this.state.settings} changeSettings={this.changeSettings} />
+      <div id="game">
+        <Menu
+          settings={this.state.settings}
+          changeSettings={this.changeSettings}
+          spawn={this.spawn}
+        />
 
-        {tiles.map((tile, i) => <Tile model={tile} size={settings.tile.size} key={i} />)}
-        {organisms.map((organism, i) => <Organism model={organism} key={i} />)}
+        <div id="world" style={style}>
+          {tiles.map((tile, i) => <Tile model={tile} size={settings.tile.size} key={i} />)}
+          {organisms.map((organism, i) => <Organism model={organism} key={i} />)}
+        </div>
 
         <div onClick={this.cycle}>Next Cycle</div>
       </div>

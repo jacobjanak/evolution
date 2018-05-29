@@ -1,1 +1,8 @@
+#game {
+  width: 100%;
+}
 
+#world {
+  position: relative;
+  margin: auto;
+}

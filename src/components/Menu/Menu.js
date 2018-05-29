@@ -19,7 +19,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { settings, changeSettings } = this.props;
+    const { settings, changeSettings, spawn } = this.props;
     const { activeItem } = this.state;
 
     return (
@@ -38,7 +38,7 @@ class Menu extends React.Component {
           Settings
         </button>
         <div className="content">
-          <Settings settings={settings} changeSettings={changeSettings} />
+          <Settings changeSettings={changeSettings} settings={settings} />
         </div>
         <button
         className={activeItem === 'actions' ? 'collapsible active' : 'collapsible'}
@@ -46,7 +46,7 @@ class Menu extends React.Component {
           Actions
         </button>
         <div className="content">
-          <Actions />
+          <Actions spawn={spawn} settings={settings} />
         </div>
       </nav>
     );

@@ -5,10 +5,28 @@ class Actions extends React.Component {
   render() {
     return (
       <div id="actions">
-        <button id="new-world" className="btn btn-stripe">New world</button>
-        <button id="spawn-plant" className="btn btn-stripe">Spawn plants</button>
-        <button id="spawn-herbivore" className="btn btn-stripe">Spawn herbivores</button>
-        <button id="spawn-carnivore" className="btn btn-stripe">Spawn carnivores</button>
+        <button className="btn btn-stripe">New world</button>
+        <button
+          className="btn btn-stripe"
+          onClick={() => {
+            this.props.spawn('plants')
+          }}>
+          Spawn plants
+        </button>
+        <button
+          className="btn btn-stripe"
+          onClick={() => {
+            this.props.spawn('herbivores')
+          }}>
+          Spawn herbivores
+        </button>
+        <button
+          className="btn btn-stripe"
+          onClick={() => {
+            this.props.spawn('carnivores')
+          }}>
+          Spawn carnivores
+        </button>
       </div>
     );
   }
