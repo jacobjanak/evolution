@@ -9,18 +9,21 @@
   "plant": {
     "size": 20,
     "reproduction": 1,
+    "spawnCount": 100,
     "color": "brown"
   },
   "herbivore": {
     "size": 10,
     "reproduction": 25,
     "healthLoss": 5,
+    "spawnCount": 50,
     "color": "blue"
   },
   "carnivore": {
     "size": 10,
     "reproduction": 55,
     "healthLoss": 2,
+    "spawnCount": 20,
     "color": "red"
   }
 }

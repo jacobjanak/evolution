@@ -38,6 +38,49 @@ class Settings extends React.Component {
         </div>
         {/* End World Dimensions */}
 
+        {/* Spawn Counts */}
+        <h3 className="input-header">Spawn Counts</h3>
+        <div className="input-container">
+          <input
+            id="plant-spawn-count"
+            type="number"
+            min="1" max="1000"
+            value={settings.plant.spawnCount}
+            onChange={(event) => {
+              settings.plant.spawnCount = event.target.value;
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="plant-spawn-count">Plants</label>
+        </div>
+        <div className="input-container">
+          <input
+            id="herbivore-spawn-count"
+            type="number"
+            min="1" max="1000"
+            value={settings.herbivore.spawnCount}
+            onChange={(event) => {
+              settings.herbivore.spawnCount = event.target.value;
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="herbivore-spawn-count">Herbivores</label>
+        </div>
+        <div className="input-container">
+          <input
+            id="carnivore-spawn-count"
+            type="number"
+            min="1" max="1000"
+            value={settings.carnivore.spawnCount}
+            onChange={(event) => {
+              settings.carnivore.spawnCount = event.target.value;
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="carnivore-spawn-count">Carnivores</label>
+        </div>
+        {/* End Spawn Counts */}
+
         {/* Sizes */}
         <h3 className="input-header">Sizes</h3>
         <div className="input-container">
@@ -90,7 +133,7 @@ class Settings extends React.Component {
               changeSettings(settings)
             }}
           />
-          <label htmlFor="herbivore-size">Carnivores</label>
+          <label htmlFor="carnivore-size">Carnivores</label>
         </div>
         {/* End Sizes */}
 

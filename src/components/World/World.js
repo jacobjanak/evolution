@@ -46,8 +46,6 @@ class World extends React.Component {
   render() {
     const { settings, tiles } = this.props;
     const { plants, herbivores, carnivores } = this.state;
-
-    // creating one array for more DRY code
     const organisms = [].concat(plants, herbivores, carnivores);
 
     const style = {
@@ -57,21 +55,10 @@ class World extends React.Component {
 
     return (
       <div id="world" style={style}>
-
-        { /* spawning tiles */
-          tiles.map((tile, i) => {
-            return <Tile model={tile} size={settings.tile.size} key={i} />
-          })
-        }
-
-        { /* spawning organisms */
-          organisms.map((organism, i) => {
-            return <Organism model={organism} key={i} />
-          })
-        }
+        {tiles.map((tile, i) => <Tile model={tile} size={settings.tile.size} key={i} />)}
+        {organisms.map((organism, i) => <Organism model={organism} key={i} />)}
 
         <div onClick={this.cycle}>Next Cycle</div>
-
       </div>
     );
   }

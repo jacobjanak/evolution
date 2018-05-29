@@ -1,5 +1,6 @@
 import React from 'react';
 import Settings from '../Settings';
+import Actions from '../Actions';
 import './Menu.css';
 
 class Menu extends React.Component {
@@ -12,11 +13,9 @@ class Menu extends React.Component {
   }
 
   activate(item) {
-    if (item === this.state.activeItem) {
-      this.setState({ activeItem: false })
-    } else {
-      this.setState({ activeItem: item })
-    }
+    this.setState({
+      activeItem: item === this.state.activeItem ? false : item
+    })
   }
 
   render() {
@@ -47,7 +46,7 @@ class Menu extends React.Component {
           Actions
         </button>
         <div className="content">
-
+          <Actions />
         </div>
       </nav>
     );
