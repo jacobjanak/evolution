@@ -5,7 +5,11 @@ class Actions extends React.Component {
   render() {
     return (
       <div id="actions">
-        <button className="btn btn-stripe">New world</button>
+        <button
+          className="btn btn-stripe"
+          onClick={this.props.newWorld}>
+          New world
+        </button>
         <button
           className="btn btn-stripe"
           onClick={() => {

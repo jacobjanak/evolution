@@ -23,6 +23,7 @@ class Game extends React.Component {
 
     this.changeSettings = this.changeSettings.bind(this);
     this.spawn = this.spawn.bind(this);
+    this.newWorld = this.newWorld.bind(this);
     this.cycle = this.cycle.bind(this);
   }
 
@@ -55,6 +56,15 @@ class Game extends React.Component {
       carnivores = spawn.carnivores(settings.carnivore.spawnCount, carnivores, settings);
       this.setState({ carnivores: carnivores })
     }
+  }
+
+  newWorld() {
+    this.setState({
+      tiles: [],
+      plants: [],
+      herbivores: [],
+      carnivores: []
+    }, this.updateTileCount)
   }
 
   cycle() {
@@ -93,6 +103,7 @@ class Game extends React.Component {
           settings={this.state.settings}
           changeSettings={this.changeSettings}
           spawn={this.spawn}
+          newWorld={this.newWorld}
         />
 
         <div id="world" style={style}>

@@ -19,7 +19,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { settings, changeSettings, spawn } = this.props;
+    const { settings, changeSettings, spawn, newWorld } = this.props;
     const { activeItem } = this.state;
 
     return (
@@ -46,7 +46,7 @@ class Menu extends React.Component {
           Actions
         </button>
         <div className="content">
-          <Actions spawn={spawn} settings={settings} />
+          <Actions spawn={spawn} settings={settings} newWorld={newWorld} />
         </div>
       </nav>
     );
