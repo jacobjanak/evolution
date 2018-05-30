@@ -9,6 +9,7 @@ const reproduce = {
         const newPlant = new PlantModel(settings, {
           x: plant.x + random.randInt(plant.size * -3, plant.size * 3),
           y: plant.y + random.randInt(plant.size * -3, plant.size * 3),
+          growth: plant.growth,
           reproduction: plant.reproduction
         });
 

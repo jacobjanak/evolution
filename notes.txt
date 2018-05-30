@@ -1,10 +1,9 @@
-make sure settings only affect new organisms and not existing ones
 get plants to stop flickering if they spawn on a desert
 make speed a trait
 rename the random.js methods
 make fertility and preference an int
-spawn counts may be less then the user wants
 put mutations into the models themselves and not reproduce.js
-rename move so that it follows the conventions of the other utils
 where should I put global css files?
 add wildfires
+get growth out of plant file
+fix bug where animals reproduce super fast for no reason

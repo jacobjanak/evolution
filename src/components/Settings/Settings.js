@@ -167,6 +167,23 @@ class Settings extends React.Component {
         </div>
         {/* End Hunger Loss */}
 
+        {/* Growth */}
+        <h3 className="input-header">Growth</h3>
+        <div className="input-container">
+          <input
+            id="plant-growth"
+            type="number"
+            min="0" max="1000"
+            value={settings.plant.growth}
+            onChange={(event) => {
+              settings.plant.growth = Number(event.target.value);
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="plant-growth">Plants</label>
+        </div>
+        {/* End Growth */}
+
         {/* Reproduction Rate */}
         <h3 className="input-header">Reproduction Rate</h3>
         <div className="input-container">

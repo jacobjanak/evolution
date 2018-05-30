@@ -1,29 +1,30 @@
 {
   "world": {
-    "height": 5,
-    "width": 8
+    "height": 3,
+    "width": 3
   },
   "tile": {
     "size": 100
   },
   "plant": {
     "size": 20,
-    "reproduction": 1,
-    "spawnCount": 100,
+    "reproduction": 20,
+    "spawnCount": 20,
+    "growth": 5,
     "color": "brown"
   },
   "herbivore": {
     "size": 10,
-    "reproduction": 25,
-    "healthLoss": 5,
-    "spawnCount": 50,
+    "reproduction": 30,
+    "healthLoss": 4,
+    "spawnCount": 1,
     "color": "blue"
   },
   "carnivore": {
     "size": 10,
     "reproduction": 55,
     "healthLoss": 2,
-    "spawnCount": 20,
+    "spawnCount": 1,
     "color": "red"
   }
 }

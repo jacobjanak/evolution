@@ -9,6 +9,7 @@ class Plant extends Organism {
 
     super(settings, genetics)
 
+    this.growth = genetics.growth || settings.plant.growth;
     this.color = genetics.color || settings.plant.color;
     this.health = 0;
   }
@@ -19,7 +20,7 @@ class Plant extends Organism {
     if (this.health < maxHealth) {
       // need to round because JS is bad at math
       if (this.health < maxHealth) {
-        this.health += Math.round(fertility * 5);
+        this.health += Math.round(fertility * this.growth);
       }
 
       // limit the max number
