@@ -58,10 +58,10 @@ class Game extends React.Component {
     if (faster) speed = speed * 2;
     else speed = speed / 2;
 
-    this.setState({ speed: speed })
-
-    // restart timer
-    if (playing) this.togglePlay(true);
+    this.setState({ speed: speed }, () => {
+      // restart timer
+      if (playing) this.togglePlay(true);
+    })
   }
 
   togglePlay(restart = false) {
