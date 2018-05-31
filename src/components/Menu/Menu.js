@@ -6,10 +6,7 @@ import './Menu.css';
 class Menu extends React.Component {
   constructor() {
     super()
-
-    this.state = {
-      activeItem: false
-    };
+    this.state = { activeItem: 'actions' };
   }
 
   activate(item) {

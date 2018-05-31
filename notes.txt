@@ -8,4 +8,3 @@ add wildfires
 get growth out of plant file
 fix bug where animals reproduce super fast for no reason
 make game.js not so big
-actions should be visible on page load
