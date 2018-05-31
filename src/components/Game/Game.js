@@ -7,8 +7,6 @@ import defaultSettings from '../../settings';
 import { spawn, feed, reproduce, move, updateTiles } from '../../utils';
 import './Game.css';
 
-// global variables
-let i;
 
 class Game extends React.Component {
   constructor() {

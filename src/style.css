@@ -5,8 +5,8 @@ html, body {
 
 body {
   box-sizing: border-box;
-  padding-top: 60px; /* making room for controls */
-  padding-left: 250px; /* making room for menu */
-  padding-right: 250px;
+  padding-top: 80px; /* making room for controls */
+  padding-left: 240px; /* making room for menu */
+  padding-right: 240px;
   font: 400 12px system-ui;
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import Game from '../../components/Game/';
-import Settings from '../../components/Settings/';
 import defaultSettings from '../../settings';
 
 class Home extends React.Component {
@@ -11,9 +10,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
-        <Game settings={this.state} />
-      </div>
+      <Game settings={this.state} />
     );
   }
 };

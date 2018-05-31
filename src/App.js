@@ -9,12 +9,10 @@ import PageNotFound from './pages/404';
 // MAIN
 const App = () => (
   <Router>
-    <div>
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route component={PageNotFound} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path='/' component={Home} />
+      <Route component={PageNotFound} />
+    </Switch>
   </Router>
 );
 
