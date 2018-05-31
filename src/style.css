@@ -1,6 +1,12 @@
 html, body {
   min-height: 100vh;
   min-width: 100%;
-  overflow-x: hidden;
+}
+
+body {
+  box-sizing: border-box;
+  padding-top: 60px; /* making room for controls */
+  padding-left: 250px; /* making room for menu */
+  padding-right: 250px;
   font: 400 12px system-ui;
 }

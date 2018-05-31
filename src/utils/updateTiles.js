@@ -1,6 +1,6 @@
 import { spawn } from '../utils';
 
-function updateTiles(tiles, settings) {
+function updateTiles(settings, tiles = []) {
   const needed = settings.world.height * settings.world.width;
 
   if (needed !== tiles.length) {

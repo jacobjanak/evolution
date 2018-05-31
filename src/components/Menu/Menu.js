@@ -21,6 +21,8 @@ class Menu extends React.Component {
 
     return (
       <nav id="menu">
+
+        {/* Statistics */}
         <button
         className={activeItem === 'statistics' ? 'collapsible active' : 'collapsible'}
         onClick={() => this.activate('statistics')}>
@@ -29,6 +31,9 @@ class Menu extends React.Component {
         <div className="content">
 
         </div>
+        {/* End Statistics */}
+
+        {/* Settings */}
         <button
         className={activeItem === 'settings' ? 'collapsible active' : 'collapsible'}
         onClick={() => this.activate('settings')}>
@@ -37,6 +42,9 @@ class Menu extends React.Component {
         <div className="content">
           <Settings changeSettings={changeSettings} settings={settings} />
         </div>
+        {/* End Settings */}
+
+        {/* Actions */}
         <button
         className={activeItem === 'actions' ? 'collapsible active' : 'collapsible'}
         onClick={() => this.activate('actions')}>
@@ -45,6 +53,8 @@ class Menu extends React.Component {
         <div className="content">
           <Actions spawn={spawn} settings={settings} newWorld={newWorld} />
         </div>
+        {/* End Actions */}
+
       </nav>
     );
   }

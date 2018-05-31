@@ -36,7 +36,6 @@ const find = {
     }
     // bottom
     if (coords.row !== settings.world.height - 1) {
-      console.log(tileID + settings.world.width)
       adjacentTiles.bottom = tiles[tileID + settings.world.width];
     }
 

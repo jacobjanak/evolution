@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from '../Menu';
+import Controls from '../Controls';
 import Tile from '../Tile';
 import Organism from '../Organism';
 import defaultSettings from '../../settings';
@@ -15,30 +16,65 @@ class Game extends React.Component {
 
     this.state = {
       settings: defaultSettings,
-      tiles: [],
+      playing: false,
+      timer: false,
+      speed: 1,
+      tiles: updateTiles(defaultSettings),
       plants: [],
       herbivores: [],
       carnivores: []
     };
 
     this.changeSettings = this.changeSettings.bind(this);
+    this.togglePlay = this.togglePlay.bind(this);
+    this.changeSpeed = this.changeSpeed.bind(this);
     this.spawn = this.spawn.bind(this);
     this.newWorld = this.newWorld.bind(this);
     this.cycle = this.cycle.bind(this);
   }
 
-  componentWillMount() {
-    this.updateTileCount()
+  newWorld() {
+    this.setState({
+      tiles: [],
+      plants: [],
+      herbivores: [],
+      carnivores: []
+    }, this.updateTileCount)
   }
 
   updateTileCount() {
-    const updatedTiles = updateTiles(this.state.tiles, this.state.settings);
+    const updatedTiles = updateTiles(this.state.settings, this.state.tiles);
     if (updatedTiles) this.setState({ tiles: updatedTiles });
   }
 
   changeSettings(newSettings) {
     this.setState({ settings: newSettings })
     this.updateTileCount()
+  }
+
+  changeSpeed(faster) {
+    let { speed, playing } = this.state;
+
+    if (faster) speed = speed * 2;
+    else speed = speed / 2;
+
+    this.setState({ speed: speed })
+
+    // restart timer
+    if (playing) this.togglePlay(true);
+  }
+
+  togglePlay(restart = false) {
+    const { playing, timer } = this.state;
+
+    if (playing || restart) clearInterval(timer);
+    if (!playing || restart) this.cycle();
+
+    if (!restart) {
+      this.setState({
+        playing: playing ? false : true
+      })
+    }
   }
 
   spawn(organism) {
@@ -58,17 +94,8 @@ class Game extends React.Component {
     }
   }
 
-  newWorld() {
-    this.setState({
-      tiles: [],
-      plants: [],
-      herbivores: [],
-      carnivores: []
-    }, this.updateTileCount)
-  }
-
   cycle() {
-    setInterval(() => {
+    const timer = setInterval(() => {
       let { settings, tiles, plants, herbivores, carnivores } = this.state;
 
       plants = reproduce.plants(plants, settings);
@@ -85,11 +112,15 @@ class Game extends React.Component {
         herbivores: herbivores,
         carnivores: carnivores
       })
-    }, 100)
+    }, Math.floor(200 / this.state.speed))
+
+    this.setState({
+      timer: timer
+    })
   }
 
   render() {
-    const { settings, tiles, plants, herbivores, carnivores } = this.state;
+    const { settings, playing, speed, tiles, plants, herbivores, carnivores } = this.state;
     const organisms = [].concat(plants, herbivores, carnivores);
 
     const style = {
@@ -106,12 +137,17 @@ class Game extends React.Component {
           newWorld={this.newWorld}
         />
 
+        <Controls
+          playing={playing}
+          speed={speed}
+          changeSpeed={this.changeSpeed}
+          togglePlay={this.togglePlay}
+        />
+
         <div id="world" style={style}>
           {tiles.map((tile, i) => <Tile model={tile} size={settings.tile.size} key={i} />)}
           {organisms.map((organism, i) => <Organism model={organism} key={i} />)}
         </div>
-
-        <div onClick={this.cycle}>Next Cycle</div>
       </div>
     );
   }
