@@ -167,8 +167,8 @@ class Settings extends React.Component {
         </div>
         {/* End Hunger Loss */}
 
-        {/* Growth */}
-        <h3 className="input-header">Growth</h3>
+        {/* Growth Factor */}
+        <h3 className="input-header">Growth Factor</h3>
         <div className="input-container">
           <input
             id="plant-growth"
@@ -182,7 +182,7 @@ class Settings extends React.Component {
           />
           <label htmlFor="plant-growth">Plants</label>
         </div>
-        {/* End Growth */}
+        {/* End Growth Factor */}
 
         {/* Reproduction Rate */}
         <h3 className="input-header">Reproduction Rate</h3>

@@ -12,20 +12,6 @@ class Plant extends Organism {
     this.color = genetics.color || settings.plant.color;
     this.health = 0;
   }
-
-  grow(fertility) {
-    const maxHealth = Math.round(fertility * 1000);
-
-    if (this.health < maxHealth) {
-      // need to round because JS is bad at math
-      if (this.health < maxHealth) {
-        this.health += Math.round(fertility * this.growth);
-      }
-
-      // limit the max number
-      if (this.health > maxHealth) this.health = maxHealth;
-    }
-  }
 }
 
 export default Plant;

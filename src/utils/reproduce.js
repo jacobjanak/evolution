@@ -41,16 +41,7 @@ const reproduce = {
   animals: (Model, animals, settings) => {
     animals.forEach((animal) => {
       if (animal.pregnancy === 0) {
-        const newAnimal = new Model(settings, {
-          x: animal.x,
-          y: animal.y,
-          size: animal.size,
-          preference: animal.preference,
-          reproduction: animal.reproduction,
-          color: animal.color
-        });
-
-        animals.push(newAnimal)
+        animals.push(new Model(settings, animal))
 
         // reset the cycle
         animal.pregnancy = animal.reproduction;
