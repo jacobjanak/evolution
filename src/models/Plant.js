@@ -1,4 +1,5 @@
 import Organism from './Organism';
+import { random } from '../utils';
 
 class Plant extends Organism {
   constructor(settings, genetics = {}) {

@@ -1,10 +1,8 @@
 get plants to stop flickering if they spawn on a desert
 make speed a trait
+make seed spread a trait
 rename the random.js methods
 make fertility and preference an int
-put mutations into the models themselves and not reproduce.js (make reproduction better)
 where should I put global css files?
 add wildfires
-get growth out of plant file
-fix bug where animals reproduce super fast for no reason
 make game.js not so big

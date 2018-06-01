@@ -6,12 +6,11 @@ const reproduce = {
   plants: (plants, settings) => {
     plants.forEach((plant) => {
       if (plant.pregnancy === 0) {
-        const newPlant = new PlantModel(settings, {
-          x: plant.x + random.randInt(plant.size * -3, plant.size * 3),
-          y: plant.y + random.randInt(plant.size * -3, plant.size * 3),
-          growth: plant.growth,
-          reproduction: plant.reproduction
-        });
+        const newPlant = new PlantModel(settings, plant);
+
+        // randomize the position of the new plant
+        newPlant.x += random.randInt(newPlant.size * -3, newPlant.size * 3);
+        newPlant.y += random.randInt(newPlant.size * -3, newPlant.size * 3);
 
         // make sure it's in the map and not touching other plants
         if (keepInBounds(newPlant, settings, false)) {
