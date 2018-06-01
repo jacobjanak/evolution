@@ -9,8 +9,8 @@ const reproduce = {
         const newPlant = new PlantModel(settings, plant);
 
         // randomize the position of the new plant
-        newPlant.x += random.randInt(newPlant.size * -3, newPlant.size * 3);
-        newPlant.y += random.randInt(newPlant.size * -3, newPlant.size * 3);
+        newPlant.x += random(newPlant.size * -3, newPlant.size * 3);
+        newPlant.y += random(newPlant.size * -3, newPlant.size * 3);
 
         // make sure it's in the map and not touching other plants
         if (keepInBounds(newPlant, settings, false)) {

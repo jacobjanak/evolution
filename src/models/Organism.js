@@ -5,8 +5,8 @@ class Organism {
     this.size = genetics.size;
     this.reproduction = genetics.reproduction;
     this.pregnancy = this.reproduction * 2;
-    this.x = genetics.x || random.randInt(1, settings.world.width * settings.tile.size - this.size);
-    this.y = genetics.y || random.randInt(1, settings.world.height * settings.tile.size - this.size);
+    this.x = genetics.x || random(1, settings.world.width * settings.tile.size - this.size);
+    this.y = genetics.y || random(1, settings.world.height * settings.tile.size - this.size);
   }
 }
 

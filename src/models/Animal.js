@@ -12,7 +12,7 @@ class Animal extends Organism {
     if (genetics.preference) {
       this.preference = mutate(genetics.preference);
     } else {
-      this.preference = random.randInt(0, 100);
+      this.preference = random(0, 100);
     }
   }
 }

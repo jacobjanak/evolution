@@ -4,7 +4,7 @@ function move(animals, tiles, settings) {
   animals.forEach((animal) => {
     const adjacentTiles = find.adjacentTiles(animal, tiles, settings);
     const direction = find.direction(animal, adjacentTiles);
-    let distance = random.randInt(0, animal.speed);
+    let distance = random(0, animal.speed);
 
     // change position
     if (direction === 'top') animal.y -= distance;
