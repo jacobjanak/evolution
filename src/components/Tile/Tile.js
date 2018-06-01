@@ -8,7 +8,7 @@ class Tile extends React.Component {
     const style = {
       height: size + 'px',
       width: size + 'px',
-      backgroundColor: 'rgb(' + (200 - (100 * model.fertility)) + ', 200, 100)'
+      backgroundColor: 'rgb(' + (200 - model.fertility) + ', 200, 100)'
     }
 
     return (

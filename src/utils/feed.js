@@ -5,19 +5,16 @@ const feed = {
   plants: (plants, tiles, settings) => {
     plants.forEach((plant, i) => {
       const fertility = tiles[find.tileID(plant, settings)].fertility;
-      const maxHealth = Math.round(fertility * 1000);
+      const maxHealth = Math.round(fertility * 10);
 
       if (plant.health < maxHealth) {
         // need to round because JS is bad at math
-        plant.health += Math.round(fertility * plant.growth);
+        plant.health += Math.round(fertility * (plant.growth / 100));
         if (plant.health > maxHealth) plant.health = maxHealth;
       }
 
       // plant dies if its health is 0
-      if (plant.health <= 0) {
-        plants.splice(i, 1)
-        i--; //NOTE: is this necessary?
-      }
+      if (plant.health <= 0) plants.splice(i, 1);
     })
 
     return plants;

@@ -1,5 +1,5 @@
 import Organism from './Organism';
-import random from '../utils/random';
+import { random, mutate } from '../utils';
 
 class Animal extends Organism {
   constructor(settings, genetics) {
@@ -8,7 +8,12 @@ class Animal extends Organism {
     this.health = 99;
     //NOTE: change this
     this.speed = this.size;
-    this.preference = genetics.preference || random.randDecimal(2);
+
+    if (genetics.preference) {
+      this.preference = mutate(genetics.preference);
+    } else {
+      this.preference = random.randInt(0, 100);
+    }
   }
 }
 

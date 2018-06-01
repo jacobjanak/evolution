@@ -2,7 +2,7 @@ import random from '../utils/random';
 
 class Tile {
   constructor() {
-    this.fertility = random.randDecimal(2);
+    this.fertility = random.randInt(0, 100);
   }
 }
 
