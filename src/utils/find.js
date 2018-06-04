@@ -48,9 +48,8 @@ const find = {
     for (k in adjacentTiles) {
 
       // difference between this tile and organism's ideal tile
-      const randomness = random(-10, 10) / 100;
       const difference = Math.abs(
-        adjacentTiles[k].fertility - organism.preference + randomness
+        adjacentTiles[k].fertility - organism.preference + random(-10, 10)
       );
 
       // check if this beats the best or if there's no best yet

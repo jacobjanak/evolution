@@ -10,7 +10,7 @@ class Animal extends Organism {
     this.speed = this.size;
 
     if (genetics.preference) {
-      this.preference = mutate(genetics.preference);
+      this.preference = mutate(genetics.preference, 10);
     } else {
       this.preference = random(0, 100);
     }

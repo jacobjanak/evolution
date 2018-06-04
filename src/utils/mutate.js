@@ -1,8 +1,8 @@
 import { random } from '../utils';
 
-function mutate(num) {
-  const randomness = Math.round(num / 10);
-  return random(num - randomness, num + randomness);
+function mutate(num, variation = false) {
+  if (!variation) variation = Math.round(num / 10);
+  return random(num - variation, num + variation);
 }
 
 export default mutate;

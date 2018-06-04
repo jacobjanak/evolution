@@ -19,5 +19,9 @@
   border-radius: 6px;
   border: 2px solid black;
   margin-right: 5px;
+  text-align: center;
+}
+
+.input-container > input[type="number"] {
   text-align: right;
 }

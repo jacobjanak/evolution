@@ -137,6 +137,23 @@ class Settings extends React.Component {
         </div>
         {/* End Sizes */}
 
+        {/* Growth Factor */}
+        <h3 className="input-header">Growth Factor</h3>
+        <div className="input-container">
+          <input
+            id="plant-growth"
+            type="number"
+            min="0" max="1000"
+            value={settings.plant.growth}
+            onChange={(event) => {
+              settings.plant.growth = Number(event.target.value);
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="plant-growth">Plants</label>
+        </div>
+        {/* End Growth Factor */}
+
         {/* Hunger Loss */}
         <h3 className="input-header">Hunger Loss</h3>
         <div className="input-container">
@@ -167,23 +184,6 @@ class Settings extends React.Component {
         </div>
         {/* End Hunger Loss */}
 
-        {/* Growth Factor */}
-        <h3 className="input-header">Growth Factor</h3>
-        <div className="input-container">
-          <input
-            id="plant-growth"
-            type="number"
-            min="0" max="1000"
-            value={settings.plant.growth}
-            onChange={(event) => {
-              settings.plant.growth = Number(event.target.value);
-              changeSettings(settings)
-            }}
-          />
-          <label htmlFor="plant-growth">Plants</label>
-        </div>
-        {/* End Growth Factor */}
-
         {/* Reproduction Rate */}
         <h3 className="input-header">Reproduction Rate</h3>
         <div className="input-container">
@@ -213,6 +213,46 @@ class Settings extends React.Component {
           <label htmlFor="carnivore-reproduction">Carnivores</label>
         </div>
         {/* End Reproduction Rate */}
+
+        {/* Color */}
+        <h3 className="input-header">Color (RGB, Hex)</h3>
+        <div className="input-container">
+          <input
+            id="plant-color"
+            type="text"
+            value={settings.plant.color}
+            onChange={(event) => {
+              settings.plant.color = event.target.value;
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="plant-color">Plants</label>
+        </div>
+        <div className="input-container">
+          <input
+            id="herbivore-color"
+            type="text"
+            value={settings.herbivore.color}
+            onChange={(event) => {
+              settings.herbivore.color = event.target.value;
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="herbivore-color">Herbivores</label>
+        </div>
+        <div className="input-container">
+          <input
+            id="carnivore-color"
+            type="text"
+            value={settings.carnivore.color}
+            onChange={(event) => {
+              settings.carnivore.color = event.target.value;
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="carnivore-color">Carnivores</label>
+        </div>
+        {/* End Color */}
 
       </div>
     );
