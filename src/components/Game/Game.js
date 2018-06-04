@@ -93,6 +93,7 @@ class Game extends React.Component {
   }
 
   cycle() {
+    const time = Math.floor(200 / this.state.speed);
     const timer = setInterval(() => {
       let { settings, tiles, plants, herbivores, carnivores } = this.state;
 
@@ -110,7 +111,7 @@ class Game extends React.Component {
         herbivores: herbivores,
         carnivores: carnivores
       })
-    }, Math.floor(200 / this.state.speed))
+    }, time)
 
     this.setState({
       timer: timer
