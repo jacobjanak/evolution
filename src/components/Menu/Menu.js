@@ -1,5 +1,4 @@
 import React from 'react';
-// import Statistics from '../Statistics';
 import Settings from '../Settings';
 import Actions from '../Actions';
 import './Menu.css';
