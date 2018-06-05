@@ -6,16 +6,21 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import PageNotFound from './pages/404';
 
+//NOTE: routing isn't working on github pages so I'm commenting this out
 // MAIN
+// const App = () => (
+//   <Router>
+//     <Switch>
+//       <Route exact path='/' component={Home} />
+//       {/* this route is for github pages */}
+//       <Route exact path='/evolution/' component={Home} />
+//       <Route component={PageNotFound} />
+//     </Switch>
+//   </Router>
+// );
+
 const App = () => (
-  <Router>
-    <Switch>
-      <Route exact path='/' component={Home} />
-      {/* this route is for github pages */}
-      <Route exact path='/evolution/' component={Home} />
-      <Route component={PageNotFound} />
-    </Switch>
-  </Router>
+  <Home />
 );
 
 export default App;
