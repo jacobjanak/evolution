@@ -11,6 +11,8 @@ const App = () => (
   <Router>
     <Switch>
       <Route exact path='/' component={Home} />
+      {/* this route is for github pages */}
+      <Route exact path='/evolution/' component={Home} />
       <Route component={PageNotFound} />
     </Switch>
   </Router>

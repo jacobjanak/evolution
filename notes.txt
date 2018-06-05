@@ -4,3 +4,4 @@ make seed spread a trait
 where should I put global css files?
 add wildfires
 add statistics
+make the 404 page better
