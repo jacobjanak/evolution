@@ -1,8 +1,6 @@
 # [Evolution](https://jacobjanak.github.io/evolution/)
 ### A 2-dimensional simulation of the theory of evolution and natural selection.
 
-> "I love this website" - Charles Darwin
-
 In this simulation, the world is a grid of tiles which have randomly-generated fertility, ranging from tropical rainforest (100) to desert (0).
 
 ![Image of the world](./public/img/world.png)
@@ -22,3 +20,5 @@ Both Herbivores (blue) and Carnivores (red) move around the world based on their
 ![Image of animals](./public/img/animals.png)
 
 Over time, evolution happens. Herbivores thrive in fertile environments... until carnivores come. Sometimes, carnivore populations explode in these areas, killing off the herbivores there. Other times, rapidly reproducing herbivores will eat too much of the foliage, leading to their own downfall. In these situations, not all animals die - some have evolved to prefer a different environment and have left for greener (or yellower) pastures.
+
+> "I love this website" - Charles Darwin
