@@ -2,8 +2,10 @@ import React from 'react';
 
 class Statistics extends React.Component {
   render() {
+    const style = { textAlign: 'center' };
+
     return (
-      <p>Fuck off</p>
+      <p style={style}>Coming soon</p>
     );
   }
 }

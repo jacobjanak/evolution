@@ -14,7 +14,7 @@
     "color": "brown"
   },
   "herbivore": {
-    "size": 10,
+    "size": 12,
     "reproduction": 30,
     "healthLoss": 2,
     "spawnCount": 1,

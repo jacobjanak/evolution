@@ -5,3 +5,5 @@ where should I put global css files?
 add wildfires
 add statistics
 make the 404 page better
+make it at least slightly mobile responsive
+> move the menu to the top as a block level element

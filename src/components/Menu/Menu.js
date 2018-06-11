@@ -1,4 +1,5 @@
 import React from 'react';
+import Statistics from '../Statistics';
 import Settings from '../Settings';
 import Actions from '../Actions';
 import './Menu.css';
@@ -21,6 +22,17 @@ class Menu extends React.Component {
 
     return (
       <nav id="menu">
+
+        {/* Statistics */}
+        <button
+        className={activeItem === 'statistics' ? 'collapsible active' : 'collapsible'}
+        onClick={() => this.activate('statistics')}>
+          Statistics
+        </button>
+        <div className="content">
+          <Statistics changeSettings={changeSettings} settings={settings} />
+        </div>
+        {/* End Statistics */}
 
         {/* Settings */}
         <button
