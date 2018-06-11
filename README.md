@@ -7,7 +7,7 @@ In this simulation, the world is a grid of tiles which have randomly-generated f
 
 ![Image of the world](./public/img/world.png)
 
-You can spawn three basic organisms into the world: plants, herbivores, and carnivores. New species can be created by modifying those basic traits. All organisms asexually produce offspring which inherit their parent's traits with random mutations - evolution.
+You can spawn three basic organisms into the world: plants, herbivores, and carnivores. New species can be created by modifying their basic traits. All organisms asexually produce offspring which inherit their parent's traits with random mutations - evolution.
 
 ### Plants
 
