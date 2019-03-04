@@ -17,7 +17,7 @@ class Organism extends React.Component {
     // organisms shouldn't exist if health is 0 but this is a precaution
     return model.health > 0 ? (
       <div className="organism" style={style}>
-        {model.size > 10 ? model.health : Math.ceil(model.health / 10)}
+        {model.size > 10 ? Math.ceil(model.health) : Math.ceil(model.health / 10)}
       </div>
     ) : null;
   }

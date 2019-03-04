@@ -1,5 +1,6 @@
-make speed a *real* trait
 make seed spread a trait
+make the plants grow with size
+add size to animals as well
 
 maybe:
 add wildfires

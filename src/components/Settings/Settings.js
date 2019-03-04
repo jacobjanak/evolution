@@ -214,6 +214,36 @@ class Settings extends React.Component {
         </div>
         {/* End Reproduction Rate */}
 
+        {/* Speed */}
+        <h3 className="input-header">Speed</h3>
+        <div className="input-container">
+          <input
+            id="herbivore-speed"
+            type="number"
+            min="1" max="100"
+            value={settings.herbivore.speed}
+            onChange={(event) => {
+              settings.herbivore.speed = Number(event.target.value);
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="herbivore-speed">Herbivores</label>
+        </div>
+        <div className="input-container">
+          <input
+            id="carnivore-speed"
+            type="number"
+            min="1" max="100"
+            value={settings.carnivore.speed}
+            onChange={(event) => {
+              settings.carnivore.speed = Number(event.target.value);
+              changeSettings(settings)
+            }}
+          />
+          <label htmlFor="carnivore-speed">Carnivores</label>
+        </div>
+        {/* End Speed */}
+
         {/* Color */}
         <h3 className="input-header">Color (RGB, Hex)</h3>
         <div className="input-container">

@@ -1,4 +1,5 @@
 import Animal from './Animal';
+import { mutate } from '../utils';
 
 class Herbivore extends Animal {
   constructor(settings, genetics = {}) {
@@ -8,8 +9,8 @@ class Herbivore extends Animal {
 
     super(settings, genetics)
 
+    this.speed = genetics.speed ? mutate(genetics.speed, 2) : settings.herbivore.speed;
     this.color = genetics.color || settings.herbivore.color;
-    this.speed = 10; //NOTE: change this
   }
 }
 

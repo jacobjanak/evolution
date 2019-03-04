@@ -18,13 +18,15 @@
     "reproduction": 30,
     "healthLoss": 2,
     "spawnCount": 1,
+    "speed": 6,
     "color": "blue"
   },
   "carnivore": {
     "size": 10,
-    "reproduction": 55,
-    "healthLoss": 1,
+    "reproduction": 95,
+    "healthLoss": 0.5,
     "spawnCount": 1,
+    "speed": 12,
     "color": "red"
   }
 }

@@ -9,6 +9,10 @@ function statistics(plants, herbivores, carnivores) {
       herbivores: findAverage(herbivores, 'preference'),
       carnivores: findAverage(carnivores, 'preference'),
     },
+    speed: {
+      herbivores: findAverage(herbivores, 'speed'),
+      carnivores: findAverage(carnivores, 'speed'),
+    },
   };
 
   return values;

@@ -52,7 +52,7 @@ const feed = {
     carnivores.forEach((carnivore, i) => {
       carnivore.health -= settings.carnivore.healthLoss;
 
-      if (carnivore.health <= 90) {
+      if (carnivore.health <= 60) {
 
         // eat herbivores
         herbivores.forEach((herbivore, j) => {

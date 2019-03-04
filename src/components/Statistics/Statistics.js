@@ -18,6 +18,10 @@ class Statistics extends React.Component {
         <p className="stat-header">Terrain</p>
         <p className="stat-value">Herbivores: {Math.round(stats.preference.herbivores) || 'N/A'}</p>
         <p className="stat-value">Carnivores: {Math.round(stats.preference.carnivores) || 'N/A'}</p>
+
+        <p className="stat-header">Speed</p>
+        <p className="stat-value">Herbivores: {Math.round(stats.speed.herbivores * 10) / 10 || 'N/A'}</p>
+        <p className="stat-value">Carnivores: {Math.round(stats.speed.carnivores * 10) / 10 || 'N/A'}</p>
       </div>
     );
   }
