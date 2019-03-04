@@ -4,7 +4,7 @@ import Controls from '../Controls';
 import Tile from '../Tile';
 import Organism from '../Organism';
 import defaultSettings from '../../settings';
-import { spawn, feed, reproduce, move, updateTiles } from '../../utils';
+import { spawn, feed, reproduce, move, updateTiles, statistics } from '../../utils';
 import './Game.css';
 
 
@@ -29,6 +29,11 @@ class Game extends React.Component {
     this.spawn = this.spawn.bind(this);
     this.newWorld = this.newWorld.bind(this);
     this.cycle = this.cycle.bind(this);
+
+    // automatically start game on page load w/ delay
+    setTimeout(() => {
+      this.togglePlay()
+    }, 100);
   }
 
   newWorld() {
@@ -53,11 +58,10 @@ class Game extends React.Component {
   changeSpeed(faster) {
     let { speed, playing } = this.state;
 
-    if (faster) speed = speed * 2;
-    else speed = speed / 2;
+    if (faster) speed *= 2;
+    else speed /= 2;
 
     this.setState({ speed: speed }, () => {
-      // restart timer
       if (playing) this.togglePlay(true);
     })
   }
@@ -93,7 +97,7 @@ class Game extends React.Component {
   }
 
   cycle() {
-    const time = Math.floor(200 / this.state.speed);
+    const time = Math.floor(100 / this.state.speed);
     const timer = setInterval(() => {
       let { settings, tiles, plants, herbivores, carnivores } = this.state;
 
@@ -120,6 +124,7 @@ class Game extends React.Component {
 
   render() {
     const { settings, playing, speed, tiles, plants, herbivores, carnivores } = this.state;
+
     const organisms = [].concat(plants, herbivores, carnivores);
 
     const style = {
@@ -144,8 +149,12 @@ class Game extends React.Component {
         />
 
         <div id="world" style={style}>
-          {tiles.map((tile, i) => <Tile model={tile} size={settings.tile.size} key={i} />)}
-          {organisms.map((organism, i) => <Organism model={organism} key={i} />)}
+          {tiles.map((tile, i) => (
+            <Tile model={tile} size={settings.tile.size} key={i} />
+          ))}
+          {organisms.map((organism, i) => (
+            <Organism model={organism} key={i} />
+          ))}
         </div>
       </div>
     );

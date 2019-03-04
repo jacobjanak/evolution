@@ -8,7 +8,7 @@ const feed = {
       const maxHealth = Math.round(fertility * 10);
 
       if (plant.health < maxHealth) {
-        // need to round because JS is bad at math
+        // need to round because of floating point inaccuracies
         plant.health += Math.round(fertility * (plant.growth / 100));
         if (plant.health > maxHealth) plant.health = maxHealth;
       }

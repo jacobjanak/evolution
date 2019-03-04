@@ -16,7 +16,7 @@ class Organism extends React.Component {
 
     return (
       <div className="organism" style={style}>
-        {model.health}
+        {model.size > 10 ? model.health : Math.ceil(model.health / 10)}
       </div>
     );
   }

@@ -9,10 +9,10 @@ import PageNotFound from './pages/404';
 const App = () => (
   <Router>
     <Switch>
-      <Route exact path='/' component={Home} />
       {/* this route is for github pages */}
-      <Route exact path='/evolution/' component={Home} />
-      <Route component={PageNotFound} />
+      {/* <Route exact path='/evolution/' component={Home} /> */}
+      <Route component={Home} />
+      {/* <Route component={PageNotFound} /> */}
     </Switch>
   </Router>
 );

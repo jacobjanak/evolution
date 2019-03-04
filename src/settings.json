@@ -1,7 +1,7 @@
 {
   "world": {
-    "height": 3,
-    "width": 3
+    "height": 4,
+    "width": 5
   },
   "tile": {
     "size": 100
@@ -9,8 +9,8 @@
   "plant": {
     "size": 20,
     "reproduction": 20,
-    "spawnCount": 20,
-    "growth": 10,
+    "spawnCount": 1,
+    "growth": 5,
     "color": "brown"
   },
   "herbivore": {

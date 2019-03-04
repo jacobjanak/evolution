@@ -32,7 +32,6 @@ class Menu extends React.Component {
         <div className="content">
           <Statistics changeSettings={changeSettings} settings={settings} />
         </div>
-        {/* End Statistics */}
 
         {/* Settings */}
         <button
@@ -43,7 +42,6 @@ class Menu extends React.Component {
         <div className="content">
           <Settings changeSettings={changeSettings} settings={settings} />
         </div>
-        {/* End Settings */}
 
         {/* Actions */}
         <button
@@ -52,9 +50,8 @@ class Menu extends React.Component {
           Actions
         </button>
         <div className="content">
-          <Actions spawn={spawn} settings={settings} newWorld={newWorld} />
+          <Actions spawn={spawn} newWorld={newWorld} />
         </div>
-        {/* End Actions */}
 
       </nav>
     );

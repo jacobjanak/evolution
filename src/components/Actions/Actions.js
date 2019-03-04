@@ -15,21 +15,21 @@ class Actions extends React.Component {
           onClick={() => {
             this.props.spawn('plants')
           }}>
-          Spawn plants
+          Spawn plant
         </button>
         <button
           className="btn btn-stripe"
           onClick={() => {
             this.props.spawn('herbivores')
           }}>
-          Spawn herbivores
+          Spawn herbivore
         </button>
         <button
           className="btn btn-stripe"
           onClick={() => {
             this.props.spawn('carnivores')
           }}>
-          Spawn carnivores
+          Spawn carnivore
         </button>
       </div>
     );

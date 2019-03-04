@@ -1,7 +1,6 @@
 import { PlantModel, HerbivoreModel, CarnivoreModel } from '../models';
 import { random, keepInBounds, hasSpace } from '../utils';
 
-
 const reproduce = {
   plants: (plants, settings) => {
     plants.forEach((plant) => {
