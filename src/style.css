@@ -5,6 +5,7 @@ html, body {
 
 body {
   box-sizing: border-box;
+  min-width: 768px;
   padding-top: 80px; /* making room for controls */
   padding-left: 240px; /* making room for menu */
   padding-right: 240px;

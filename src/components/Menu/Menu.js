@@ -17,7 +17,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { settings, changeSettings, spawn, newWorld } = this.props;
+    const { plants, herbivores, carnivores, settings, changeSettings, spawn, newWorld } = this.props;
     const { activeItem } = this.state;
 
     return (
@@ -30,7 +30,13 @@ class Menu extends React.Component {
           Statistics
         </button>
         <div className="content">
-          <Statistics changeSettings={changeSettings} settings={settings} />
+          <Statistics
+            changeSettings={changeSettings}
+            settings={settings}
+            plants={plants}
+            herbivores={herbivores}
+            carnivores={carnivores}
+          />
         </div>
 
         {/* Settings */}

@@ -23,20 +23,11 @@ class Game extends React.Component {
       carnivores: []
     };
 
-    this.changeSettings = this.changeSettings.bind(this);
-    this.togglePlay = this.togglePlay.bind(this);
-    this.changeSpeed = this.changeSpeed.bind(this);
-    this.spawn = this.spawn.bind(this);
-    this.newWorld = this.newWorld.bind(this);
-    this.cycle = this.cycle.bind(this);
-
     // automatically start game on page load w/ delay
-    setTimeout(() => {
-      this.togglePlay()
-    }, 100);
+    setTimeout(this.togglePlay, 100);
   }
 
-  newWorld() {
+  newWorld = () => {
     this.setState({
       tiles: [],
       plants: [],
@@ -45,17 +36,17 @@ class Game extends React.Component {
     }, this.updateTileCount)
   }
 
-  updateTileCount() {
+  updateTileCount = () => {
     const updatedTiles = updateTiles(this.state.settings, this.state.tiles);
     if (updatedTiles) this.setState({ tiles: updatedTiles });
   }
 
-  changeSettings(newSettings) {
+  changeSettings = newSettings => {
     this.setState({ settings: newSettings })
     this.updateTileCount()
   }
 
-  changeSpeed(faster) {
+  changeSpeed = faster => {
     let { speed, playing } = this.state;
 
     if (faster) speed *= 2;
@@ -66,7 +57,7 @@ class Game extends React.Component {
     })
   }
 
-  togglePlay(restart = false) {
+  togglePlay = (restart = false) => {
     const { playing, timer } = this.state;
 
     if (playing || restart) clearInterval(timer);
@@ -79,7 +70,7 @@ class Game extends React.Component {
     }
   }
 
-  spawn(organism) {
+  spawn = organism => {
     let { plants, herbivores, carnivores, settings } = this.state;
 
     if (organism === 'plants') {
@@ -96,13 +87,13 @@ class Game extends React.Component {
     }
   }
 
-  cycle() {
+  cycle = () => {
     const time = Math.floor(100 / this.state.speed);
     const timer = setInterval(() => {
       let { settings, tiles, plants, herbivores, carnivores } = this.state;
 
-      plants = reproduce.plants(plants, settings);
-      plants = feed.plants(plants, tiles, settings);
+      let plants2 = reproduce.plants(plants, settings);
+      let plants3 = feed.plants(plants2, tiles, settings);
       herbivores = move(herbivores, tiles, settings);
       ({ herbivores, plants } = feed.herbivores(herbivores, plants, settings));
       herbivores = reproduce.herbivores(herbivores, settings);
@@ -111,7 +102,7 @@ class Game extends React.Component {
       carnivores = reproduce.carnivores(carnivores, settings);
 
       this.setState({
-        plants: plants,
+        plants: plants3,
         herbivores: herbivores,
         carnivores: carnivores
       })
@@ -135,6 +126,9 @@ class Game extends React.Component {
     return (
       <div id="game">
         <Menu
+          plants={plants}
+          herbivores={herbivores}
+          carnivores={carnivores}
           settings={this.state.settings}
           changeSettings={this.changeSettings}
           spawn={this.spawn}

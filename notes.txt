@@ -1,9 +1,5 @@
-get plants to stop flickering if they spawn on a desert
 make speed a *real* trait
 make seed spread a trait
-where should I put global css files?
+
+maybe:
 add wildfires
-add statistics
-make the 404 page better
-make it at least slightly mobile responsive
-> move the menu to the top as a block level element

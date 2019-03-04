@@ -41,3 +41,9 @@
   border-bottom: 2px solid black;
   background-color: white;
 }
+
+@media screen and (max-width: 767px) {
+  #menu {
+    position: absolute;
+  }
+}

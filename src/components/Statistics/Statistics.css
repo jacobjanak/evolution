@@ -1,0 +1,12 @@
+.stat-header {
+  margin: 12px 0 4px;
+}
+
+.stat-header:first-child {
+  margin-top: 0;
+}
+
+.stat-value {
+  margin-right: 32px;
+  text-align: right;
+}
