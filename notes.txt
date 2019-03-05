@@ -1,6 +1,10 @@
+add age
+add spotlight
 make seed spread a trait
 make the plants grow with size
 add size to animals as well
+keep track of each organisms stats
+no need to make deserts
 
 maybe:
 add wildfires

@@ -1,4 +1,4 @@
-import { find, touching } from '../utils';
+import { find, touching, hasSpace } from '../utils';
 
 const feed = {
 
@@ -9,12 +9,15 @@ const feed = {
 
       if (plant.health < maxHealth) {
         // need to round because of floating point inaccuracies
-        plant.health += Math.round(fertility * (plant.growth / 100));
+        const growth = Math.round(fertility * (plant.growth / 100));
+        plant.health += growth;
+
         if (plant.health > maxHealth) plant.health = maxHealth;
       }
 
       // plant dies if its health is 0
       if (plant.health <= 0) plants.splice(i, 1);
+      else plant.age++;
     })
 
     return plants;
@@ -42,6 +45,8 @@ const feed = {
       // herbivore dies if health is 0 or less
       if (herbivore.health <= 0) {
         herbivores.splice(i, 1);
+      } else {
+        herbivore.age++
       }
     })
 
@@ -67,6 +72,8 @@ const feed = {
         // herbivore dies if health is 0 or less
         if (carnivore.health <= 0) {
           carnivores.splice(i, 1);
+        } else {
+          carnivore.age++
         }
       }
     })

@@ -1,6 +1,7 @@
 import React from 'react';
 import Menu from '../Menu';
 import Controls from '../Controls';
+import Spotlight from '../Spotlight';
 import Tile from '../Tile';
 import Organism from '../Organism';
 import defaultSettings from '../../settings';
@@ -20,7 +21,8 @@ class Game extends React.Component {
       tiles: updateTiles(defaultSettings),
       plants: [],
       herbivores: [],
-      carnivores: []
+      carnivores: [],
+      spotlight: false,
     };
 
     // automatically start game on page load w/ delay
@@ -92,8 +94,8 @@ class Game extends React.Component {
     const timer = setInterval(() => {
       let { settings, tiles, plants, herbivores, carnivores } = this.state;
 
-      let plants2 = reproduce.plants(plants, settings);
-      let plants3 = feed.plants(plants2, tiles, settings);
+      plants = reproduce.plants(plants, settings);
+      plants = feed.plants(plants, tiles, settings);
       herbivores = move(herbivores, tiles, settings);
       ({ herbivores, plants } = feed.herbivores(herbivores, plants, settings));
       herbivores = reproduce.herbivores(herbivores, settings);
@@ -102,7 +104,7 @@ class Game extends React.Component {
       carnivores = reproduce.carnivores(carnivores, settings);
 
       this.setState({
-        plants: plants3,
+        plants: plants,
         herbivores: herbivores,
         carnivores: carnivores
       })
@@ -113,8 +115,13 @@ class Game extends React.Component {
     })
   }
 
+  spotlight = organism => {
+    console.log(organism)
+    this.setState({ spotlight: organism })
+  }
+
   render() {
-    const { settings, playing, speed, tiles, plants, herbivores, carnivores } = this.state;
+    const { settings, playing, speed, tiles, plants, herbivores, carnivores, spotlight } = this.state;
 
     const organisms = [].concat(plants, herbivores, carnivores);
 
@@ -142,12 +149,14 @@ class Game extends React.Component {
           togglePlay={this.togglePlay}
         />
 
+        <Spotlight organism={spotlight} />
+
         <div id="world" style={style}>
           {tiles.map((tile, i) => (
             <Tile model={tile} size={settings.tile.size} key={i} />
           ))}
           {organisms.map((organism, i) => (
-            <Organism model={organism} key={i} />
+            <Organism model={organism} spotlight={this.spotlight} key={i} />
           ))}
         </div>
       </div>

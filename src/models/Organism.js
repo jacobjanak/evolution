@@ -2,6 +2,7 @@ import random from '../utils/random';
 
 class Organism {
   constructor(settings, genetics = {}) {
+    this.age = 0;
     this.size = genetics.size;
     this.reproduction = genetics.reproduction;
     this.pregnancy = this.reproduction * 2;
