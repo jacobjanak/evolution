@@ -13,6 +13,19 @@ function statistics(plants, herbivores, carnivores) {
       herbivores: findAverage(herbivores, 'speed'),
       carnivores: findAverage(carnivores, 'speed'),
     },
+    age: {
+      plants: findHighest(plants, 'age'),
+      herbivores: findHighest(herbivores, 'age'),
+      carnivores: findHighest(carnivores, 'age'),
+    },
+    offspring: {
+      plants: findHighest(plants, 'offspring'),
+      herbivores: findHighest(herbivores, 'offspring'),
+      carnivores: findHighest(carnivores, 'offspring'),
+    },
+    kills: {
+      carnivores: findHighest(carnivores, 'kills'),
+    },
   };
 
   return values;
@@ -25,6 +38,14 @@ function findAverage(arr, k) {
   arr.forEach(el => sum += el[k])
 
   return sum / arr.length;
+}
+
+function findHighest(arr, k) {
+  let highest = 0;
+  arr.forEach(el => {
+    if (el[k] > highest) highest = el[k];
+  })
+  return highest;
 }
 
 export default statistics;

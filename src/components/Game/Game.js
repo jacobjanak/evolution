@@ -1,7 +1,6 @@
 import React from 'react';
 import Menu from '../Menu';
 import Controls from '../Controls';
-import Spotlight from '../Spotlight';
 import Tile from '../Tile';
 import Organism from '../Organism';
 import defaultSettings from '../../settings';
@@ -116,7 +115,6 @@ class Game extends React.Component {
   }
 
   spotlight = organism => {
-    console.log(organism)
     this.setState({ spotlight: organism })
   }
 
@@ -140,6 +138,7 @@ class Game extends React.Component {
           changeSettings={this.changeSettings}
           spawn={this.spawn}
           newWorld={this.newWorld}
+          spotlight={spotlight}
         />
 
         <Controls
@@ -148,8 +147,6 @@ class Game extends React.Component {
           changeSpeed={this.changeSpeed}
           togglePlay={this.togglePlay}
         />
-
-        <Spotlight organism={spotlight} />
 
         <div id="world" style={style}>
           {tiles.map((tile, i) => (

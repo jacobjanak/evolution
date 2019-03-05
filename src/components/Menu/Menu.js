@@ -1,5 +1,6 @@
 import React from 'react';
 import Statistics from '../Statistics';
+import Spotlight from '../Spotlight';
 import Settings from '../Settings';
 import Actions from '../Actions';
 import './Menu.css';
@@ -17,11 +18,30 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { plants, herbivores, carnivores, settings, changeSettings, spawn, newWorld } = this.props;
     const { activeItem } = this.state;
+    const {
+      plants, 
+      herbivores, 
+      carnivores, 
+      settings, 
+      changeSettings, 
+      spawn, 
+      newWorld, 
+      spotlight,
+    } = this.props;
 
     return (
-      <nav id="menu">
+      <nav className="menu">
+
+        {/* Settings */}
+        <button
+        className={activeItem === 'settings' ? 'collapsible active' : 'collapsible'}
+        onClick={() => this.activate('settings')}>
+          Settings
+        </button>
+        <div className="content">
+          <Settings changeSettings={changeSettings} settings={settings} />
+        </div>
 
         {/* Statistics */}
         <button
@@ -39,14 +59,14 @@ class Menu extends React.Component {
           />
         </div>
 
-        {/* Settings */}
+        {/* Spotlight */}
         <button
-        className={activeItem === 'settings' ? 'collapsible active' : 'collapsible'}
-        onClick={() => this.activate('settings')}>
-          Settings
+        className={activeItem === 'spotlight' ? 'collapsible active' : 'collapsible'}
+        onClick={() => this.activate('spotlight')}>
+          Spotlight
         </button>
         <div className="content">
-          <Settings changeSettings={changeSettings} settings={settings} />
+          <Spotlight organism={spotlight} />
         </div>
 
         {/* Actions */}

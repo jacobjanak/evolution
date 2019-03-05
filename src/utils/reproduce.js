@@ -15,6 +15,7 @@ const reproduce = {
         if (keepInBounds(newPlant, settings, false)) {
           if (hasSpace(newPlant, plants)) {
             plants.push(newPlant);
+            plant.offspring++
           }
         }
 
@@ -40,6 +41,7 @@ const reproduce = {
     animals.forEach((animal) => {
       if (animal.pregnancy === 0) {
         animals.push(new Model(settings, animal))
+        animal.offspring++
 
         // reset the cycle
         animal.pregnancy = animal.reproduction;

@@ -11,6 +11,7 @@ class Carnivore extends Animal {
 
     this.speed = genetics.speed ? mutate(genetics.speed, 2) : settings.carnivore.speed;
     this.color = genetics.color || settings.carnivore.color;
+    this.kills = 0;
   }
 }
 
