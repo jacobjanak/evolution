@@ -14,6 +14,11 @@ class Organism extends React.Component {
       backgroundColor: model.color
     };
 
+    let text;
+    if (model.size > 10) text = Math.ceil(model.health);
+    else if (model.size > 7) text = Math.ceil(model.health / 10);
+    else text = '';
+
     // organisms shouldn't exist if health is 0 but this is a precaution
     return model.health > 0 ? (
       <div
@@ -22,7 +27,7 @@ class Organism extends React.Component {
         onMouseLeave={() => spotlight(false)}
         style={style}
       >
-        {model.size > 10 ? Math.ceil(model.health) : Math.ceil(model.health / 10)}
+        {text}
       </div>
     ) : null;
   }

@@ -1,10 +1,9 @@
-add age
-add spotlight
-make seed spread a trait
 make the plants grow with size
-add size to animals as well
-keep track of each organisms stats
-no need to make deserts
+> improve this
+make speed between like 5 and 12
+make size between 8 and 16
 
 maybe:
+make seed spread a trait
 add wildfires
+add size to animals as well <--- tried it... it's awful

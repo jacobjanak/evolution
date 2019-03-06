@@ -8,9 +8,10 @@ class Plant extends Organism {
 
     super(settings, genetics)
 
+    this.health = 0;
     this.growth = genetics.growth || settings.plant.growth;
     this.color = genetics.color || settings.plant.color;
-    this.health = 0;
+    this.size = genetics.size;
   }
 }
 

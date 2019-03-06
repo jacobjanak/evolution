@@ -9,7 +9,7 @@ const feed = {
 
       if (plant.health < maxHealth) {
         // need to round because of floating point inaccuracies
-        const growth = Math.round(fertility * (plant.growth / 100));
+        const growth = Math.ceil(fertility * (plant.growth / 100));
         plant.health += growth;
 
         if (plant.health > maxHealth) plant.health = maxHealth;
@@ -17,7 +17,12 @@ const feed = {
 
       // plant dies if its health is 0
       if (plant.health <= 0) plants.splice(i, 1);
-      else plant.age++;
+      else {
+        plant.age++
+        if (plant.size < settings.plant.size * 2) {
+          plant.size = Math.round(plant.health / 100 + settings.plant.size)
+        }
+      };
     })
 
     return plants;
@@ -25,7 +30,7 @@ const feed = {
 
   herbivores: (herbivores, plants, settings) => {
     herbivores.forEach((herbivore, i) => {
-      herbivore.health -= settings.herbivore.healthLoss;
+      herbivore.health -= settings.herbivore.healthLoss * (herbivore.size / 10);
       herbivore.age++
 
       // eat plants
@@ -54,7 +59,7 @@ const feed = {
 
   carnivores: (carnivores, herbivores, settings) => {
     carnivores.forEach((carnivore, i) => {
-      carnivore.health -= settings.carnivore.healthLoss;
+      carnivore.health -= settings.carnivore.healthLoss * (carnivore.size / 10);
       carnivore.age++
       if (carnivore.health <= 60) {
 
