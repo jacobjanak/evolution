@@ -9,7 +9,7 @@ class Herbivore extends Animal {
 
     super(settings, genetics)
 
-    this.speed = genetics.speed ? mutate(genetics.speed, 2) : settings.herbivore.speed;
+    this.speed = genetics.speed || settings.herbivore.speed;
     this.color = genetics.color || settings.herbivore.color;
   }
 }
